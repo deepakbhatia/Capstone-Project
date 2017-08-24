@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name" translatable="false">ReceiptBox</string>
+    <string name="title_activity_add" translatable="true">Add Receipt</string>
+
+    <!-- Main -->
+
+    <!-- CreateAccount -->
+
+    <!-- LoginAccount -->
+
+    <!-- Home -->
+
+    <!-- AddReceipt -->
+    <string name="add_edittext_place" translatable="true">Place and/or Item(s)</string>
+    <string name="add_edittext_amount" translatable="true">Amount</string>
+
+    <!-- NewReceipts -->
+    <string name="new_action_archive" translatable="true">Archive Receipts</string>
+    <string name="new_action_clear" translatable="true">Clear Receipts</string>
+
+    <!-- ArchivedReceipts -->
+
+    <string name="title_activity_central" translatable="false">CentralActivity</string>
+    <string name="title_archived" translatable="true">Archived Receipts</string>
+    <string name="title_receipts" translatable="true">Receipts</string>
+    <string name="delete_action" translatable="true">Delete</string>
+    <string name="archived_action" translatable="true">Archive</string>
+    <string name="add_card_payment" translatable="true">Card Payment</string>
+    <string name="receipt_item_title" translatable="true">Product Item Title</string>
+    <string name="save_receipt" translatable="true">Save Receipt</string>
+
+    <string-array name="receipt_types" translatable="true">
+        <item>Food</item>
+        <item>Entertainment</item>
+        <item>Transport</item>
+        <item>Health</item>
+        <item>Other Household</item>
+    </string-array>
+    <string name="title_activity_settings" translatable="true">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+
+    <!-- Example settings for Notifications -->
+
+    <string name="action_settings" translatable="true">Settings</string>
+    <string name="pref_default_currency" translatable="false">$</string>
+    <string name="pref_title_currency" translatable="true">Currency</string>
+    <string name="currency_key" translatable="false">currency</string>
+    <string name="default_currency" translatable="false">$</string>
+    <string name="receipt_date_hint" translatable="true">Enter Receipt Date</string>
+
+
+    <string name="start_phone_auth" translatable="true">Start</string>
+    <string name="verify_phone_auth" translatable="true">Verify</string>
+    <string name="resend_phone_auth" translatable="true">Resend</string>
+    <string name="hint_phone_number" translatable="true">Phone Number</string>
+    <string name="hint_verification_code" translatable="true">Verification Code</string>
+    <string name="status_code_sent" translatable="true">Code Sent</string>
+    <string name="status_verification_failed" translatable="true">Verification failed</string>
+    <string name="status_verification_succeeded" translatable="true">Verification succeeded</string>
+    <string name="status_sign_in_failed" translatable="true">Sign-in failed</string>
+    <string name="instant_validation" translatable="true">(instant validation)</string>
+    <string name="firebase_status_fmt" translatable="true"></string>
+    <string name="signed_in" translatable="true">Signed In</string>
+    <string name="signed_out" translatable="true">Signed Out</string>
+    <string name="phone_title_text"></string>
+    <string name="desc_firebase_lockup">App Icon</string>
+    <string name="sign_out" translatable="true">Sign Out</string>
+    <string name="title_account" translatable="true">Your Account</string>
+    <string name="unauth_storage_message">Receipts will be stored on Device</string>
+    <string name="auth_storage_message">Receipts will be stored Servers too.</string>
+    <string name="autocomplete_place_fragment_hint">Address or Place</string>
+    <string name="receipt_created_message">New Receipt Added</string>
+
+
+</resources>

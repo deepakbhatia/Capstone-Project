@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorViewFocus"
+    tools:context=".AddReceipt">
+
+    <EditText android:id="@+id/add_edittext_title"
+        android:hint="@string/receipt_item_title"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:contentDescription="Enter Receipt Amount"
+
+        />
+
+    <TextView android:id="@+id/add_datepicker_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/price_text_size"
+        android:gravity="center"
+        android:hint="@string/receipt_date_hint"
+        android:layout_below="@id/add_edittext_title"
+        android:contentDescription="Choose Receipt Date. Tapping will open a date picker dialog"
+        />
+
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_datepicker_date"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
+    <EditText android:id="@+id/add_edittext_place"
+        android:hint="@string/add_edittext_place"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_datepicker_date"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:visibility="gone"
+        android:contentDescription="Enter Place of Receipt"
+
+        />
+
+    <EditText android:id="@+id/add_edittext_amount"
+        android:hint="@string/add_edittext_amount"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/place_autocomplete_fragment"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:contentDescription="Enter Recetipt Amount"
+        />
+
+    <CheckBox android:id="@+id/add_card_payment"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/add_card_payment"
+        android:layout_below="@id/add_edittext_amount"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:contentDescription="Tap to Select or Unselect Card Payment"
+        />
+    <Spinner
+        android:id="@+id/receipt_category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_card_payment"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:contentDescription="Tap to Open Spinner to Choose Receipt Category"
+        />
+    <Button
+        android:id="@+id/save_receipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_receipt"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:padding="@dimen/elemPadding"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryText"
+        android:background="@drawable/complete_button_drawable"
+        android:contentDescription="Tap button to save receipt"
+        />
+
+</RelativeLayout>

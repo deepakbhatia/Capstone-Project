@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorViewFocus"
+    tools:context="com.obelix.receiptsbox.CentralActivity">
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/navigation"
+        >
+    </FrameLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@drawable/bottom_navigation_selector"
+        app:itemTextColor="@drawable/bottom_navigation_selector"
+        app:menu="@menu/navigation"
+        app:theme="@style/Widget.Design.BottomNavigationView"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_receipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/navigation"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="Tap to Open Page to Create Receipt"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        app:elevation="@dimen/elevation"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        app:rippleColor="@color/colorPrimaryRipple"
+        android:tint="@android:color/white"
+        />
+</RelativeLayout>
+
+

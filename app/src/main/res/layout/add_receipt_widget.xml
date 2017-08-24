@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/add_receipt_widget_action"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Add Receipts"
+        android:drawableBottom="@mipmap/ic_launcher"
+        android:layout_gravity="center"
+        android:elevation="@dimen/elevation"
+        android:contentDescription="Tap to Open Page to Create Receipt"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:tint="@android:color/white"
+        android:textColor="@color/colorPrimaryText"
+        android:background="@drawable/complete_button_drawable"
+        />
+</LinearLayout>
