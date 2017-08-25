@@ -11,17 +11,16 @@ public class Receipt  {
     public String type;
 
     public double amount;
-    public boolean card_payment;
-    public boolean archived;
-    public boolean deleted;
+    public int card_payment;
+    public int archived;
+    public int deleted;
 
     public long priority;
-
     public Receipt(){
 
     }
 
-    public Receipt(String _id, String type, String title, String date, String place, double amount, boolean card_payment) {
+    public Receipt(String _id, String type, String title, String date, String place, double amount, int card_payment) {
         this.receipt_id = _id;
         this.type = type;
         this.title = title;

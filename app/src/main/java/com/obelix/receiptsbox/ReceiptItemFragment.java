@@ -138,18 +138,18 @@ public class ReceiptItemFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
     }
 
-    private static String RECEIPT_SORT_DATE = "date";
+    public static String RECEIPT_SORT_DATE = "date";
 
-    private static String RECEIPT_SORT_TYPE = "type";
+    public static String RECEIPT_SORT_TYPE = "type";
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SortBy sortBy){
-        Toast.makeText(getActivity(), sortBy.type+":"+sortBy.type, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), sortBy.type+":"+sortBy.type, Toast.LENGTH_SHORT).show();
 
         if(sortBy.type.contains(RECEIPT_SORT_DATE))
         {
             if(Constants.authenticated){
-                new QueryFirebaseTask().execute(RECEIPT_SORT_DATE,String.valueOf(-1*(Long.parseLong(sortBy.value))));
+                new QueryFirebaseTask(this).execute("priority",String.valueOf((Long.parseLong(sortBy.value))));
             }else{
                 Bundle bundle = new Bundle();
 
@@ -162,7 +162,7 @@ public class ReceiptItemFragment extends Fragment implements
         }else  if(sortBy.type.contains(RECEIPT_SORT_TYPE))
         {
             if(Constants.authenticated){
-                new QueryFirebaseTask().execute(RECEIPT_SORT_TYPE,sortBy.value);
+                new QueryFirebaseTask(this).execute(RECEIPT_SORT_TYPE,sortBy.value);
 
             }else{
 
@@ -180,7 +180,7 @@ public class ReceiptItemFragment extends Fragment implements
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(Receipt receipt){
-        Toast.makeText(getActivity(), R.string.receipt_created_message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.receipt_created_message), Toast.LENGTH_SHORT).show();
 
     }
     @Override

@@ -88,6 +88,7 @@
     <string name="sign_in_process_status_cd">Sign In Process Status</string>
     <string name="tap_to_open_page_to_create_receipt_cd">Tap to Open Page to Create Receipt</string>
     <string name="error_form_filled_message">Check if its filled correctly</string>
+    <string name="reload_message">Tap the Tab to reload</string>
 
 
 </resources>

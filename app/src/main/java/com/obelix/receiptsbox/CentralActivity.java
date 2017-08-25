@@ -178,8 +178,6 @@ public class CentralActivity extends AppCompatActivity implements
 
                     EventBus.getDefault().post(new Receipt());
                 }
-                Log.d("CentralActivity","ADD RECEIPT");
-
 
             }
         }

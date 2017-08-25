@@ -25,7 +25,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -48,6 +47,12 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
     private String TAG = "ReceiptsAdapter";
     private AppCompatActivity activity;
     private long actionReceiptId;
+
+    public final static String FOOD_CATEGORY_LABEL = "Food";
+    public final static String HEALTH_CATEGORY_LABEL = "Health";
+    public final static String TRANSPORT_CATEGORY_LABEL = "Transport";
+    public final static String ENTERTAINMENT_CATEGORY_LABEL = "Entertainment";
+    public final static String OTHER_CATEGORY_LABEL = "Other Household";
 
     public ReceiptsAdapter(AppCompatActivity activity, Context context, Cursor c, int flags) {
         super(context, c);
@@ -103,6 +108,8 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         // Called when the user selects a contextual menu item
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
+
             switch (item.getItemId()) {
                 case R.id.action_archive:
                     //shareCurrentItem();
@@ -111,6 +118,9 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
                     EventBus.getDefault().post(new ReceiptActions(true,false,Constants.selectedItems));
 
                     mode.finish(); // Action picked, so close the CAB
+
+                    Toast.makeText(mContext,mContext.getResources().getString(R.string.reload_message), Toast.LENGTH_LONG).show();
+
                     return true;
                 case R.id.action_delete:
 
@@ -118,10 +128,14 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
                     //shareCurrentItem();
                     mode.finish(); // Action picked, so close the CAB
+
+                    Toast.makeText(mContext,mContext.getResources().getString(R.string.reload_message), Toast.LENGTH_LONG).show();
+
                     return true;
                 default:
                     return false;
             }
+
         }
 
         // Called when the user exits the action mode
@@ -130,20 +144,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             mActionMode = null;
 
             Set viewKeys = Constants.selectedItemViews.keySet();
-
-            Log.d(TAG, ""+viewKeys.size());
-            Iterator viewIt = viewKeys.iterator();
-
-/*            while(viewIt.hasNext()){
-
-                View v = Constants.selectedItemViews.get((int)viewIt.next());
-                v.setSelected(false);
-
-                ContentValues receiptVals = (ContentValues)v.getTag();
-
-                setColor(v, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
-
-            }*/
 
             for(int i=0;i<Constants.selectedItemViewsList.size();i++){
                 View v = (View) Constants.selectedItemViewsList.get(i);
@@ -167,23 +167,25 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
     private void setColor(View v, String tag){
 
+
+
         switch (tag){
-            case "Food":
+            case FOOD_CATEGORY_LABEL:
                 v.setBackgroundColor(mContext.getResources().getColor(R.color.colorFood));
                 break;
-            case "Health":
+            case HEALTH_CATEGORY_LABEL:
                 v.setBackgroundColor(mContext.getResources().getColor(R.color.colorHealth));
 
                 break;
-            case "Transport":
+            case TRANSPORT_CATEGORY_LABEL:
                 v.setBackgroundColor(mContext.getResources().getColor(R.color.colorTransport));
 
                 break;
-            case "Entertainment":
+            case ENTERTAINMENT_CATEGORY_LABEL:
                 v.setBackgroundColor(mContext.getResources().getColor(R.color.colorEntertainment));
 
                 break;
-            case "Other Household":
+            case OTHER_CATEGORY_LABEL:
                 v.setBackgroundColor(mContext.getResources().getColor(R.color.colorOther));
 
                 break;
@@ -212,20 +214,14 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         public ViewHolder(View view) {
             super(view);
 
-            //mReceiptTitleView = (TextView) view.findViewById(R.id.receipt_item_title);
-            //mReceiptPriceView = (TextView) view.findViewById(R.id.price_receipt);
-            //mReceiptPlaceView = (TextView) view.findViewById(R.id.location_receipt);
-            //mReceiptDateView = (TextView) view.findViewById(R.id.date_receipt);
 
             ButterKnife.bind(this, view);
 
-            //mView = view;
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
             view.setLongClickable(true);
 
         }
-
 
         public void setData(Cursor cursor){
 
@@ -369,7 +365,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
     }*/
 
 
-    private String getDate(long timeStamp){
+    public static String getDate(long timeStamp){
 
         try{
             DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");

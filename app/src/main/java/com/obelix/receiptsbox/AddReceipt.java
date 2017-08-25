@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -80,7 +79,6 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
         String title = edittextTitle.getText().toString();
 
-        Log.d(TAG,amount_string);
         card_payment.isChecked();
 
         String type = String.valueOf(receipt_category.getSelectedItem());
@@ -89,7 +87,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         if(type!=null && date!=null && (title!=null && !title.equals(""))  && receipt_address!=null && (amount_string!=null && !amount_string.equals(""))){
             double amount = Double.parseDouble(amount_string);
 
-            Receipt receipt = new Receipt(String.valueOf(receipt_id),type,title,date,receipt_address,amount,card_payment.isChecked());
+            Receipt receipt = new Receipt(String.valueOf(receipt_id),type,title,date,receipt_address,amount,card_payment.isChecked()?1:0);
 
             storeContentValues(receipt);
 
@@ -130,22 +128,22 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
 
 
-        receiptValue.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived?1:0);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived?1:0);
+        receiptValue.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived);
+        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived);
 
 
-        receiptValue.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment?1:0);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment?1:0);
+        receiptValue.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment);
+        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
+        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_date, ReceiptsAdapter.getDate(Long.valueOf(receipt.date)));
 
-        receiptMap.put(FIREBASE_DATE_SORT_KEY, -Long.valueOf(receipt.date));
+        receiptMap.put(FIREBASE_DATE_SORT_KEY,Long.valueOf(receipt.date));
 
 
-        receiptValue.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted?1:0);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted?1:0);
+        receiptValue.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted);
+        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_place, receipt.place);

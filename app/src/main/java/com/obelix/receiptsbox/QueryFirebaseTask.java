@@ -2,16 +2,19 @@ package com.obelix.receiptsbox;
 
 import android.database.MatrixCursor;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
 
 import static com.obelix.receiptsbox.Constants.receiptsEndpoint;
+import static com.obelix.receiptsbox.ReceiptItemFragment.RECEIPT_SORT_TYPE;
 
 /**
  * Created by obelix on 23/08/2017.
@@ -25,27 +28,46 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
 
     public QueryCompleteInterface qInterface;
 
+
+    public QueryFirebaseTask(ReceiptItemFragment activity){
+        qInterface = (QueryCompleteInterface)activity;
+    }
+
     public interface QueryCompleteInterface{
         public void queryCompleted(MatrixCursor matrixCursor);
     }
+
+    static String sortBy;
     @Override
     protected Void doInBackground(String... params) {
 
-        String sortBy = params[0];
+        sortBy = params[0];
 
-        String sortByValue = params[1];
+        final String sortByValue = params[1];
 
+        Log.d("QueryFire",sortBy+":"+sortByValue);
 
         mRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.baseUrl+receiptsEndpoint);
 
-        mRef.orderByChild(sortBy)
-                .equalTo(sortByValue)
-                .addListenerForSingleValueEvent(
+        Query qRef ;
+
+
+        if(sortBy.equals(RECEIPT_SORT_TYPE)){
+            Log.d("sortBy",sortBy+":"+sortByValue);
+
+            qRef = mRef.orderByChild(sortBy).equalTo(sortByValue) ;
+        }else{
+            qRef = mRef.orderByChild(sortBy).startAt(Long.parseLong(sortByValue));
+        }
+
+        qRef.addListenerForSingleValueEvent(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+                                Log.d("QueryFire:onDataChange","---");
 
                                 MatrixCursor mc = new MatrixCursor(ReceiptItemFragment.PROJECTION_ALL); // properties from the JSONObjects
 
@@ -54,15 +76,20 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
                                 while(snapshotIt.hasNext()){
 
 
+                                    Log.d("QueryFire","Tets");
+
                                     DataSnapshot currentItem = (DataSnapshot) snapshotIt.next();
 
                                     Receipt receipt = currentItem.getValue(Receipt.class);
 
+                                    if(!sortBy.equals(RECEIPT_SORT_TYPE) && receipt.priority > Long.parseLong(sortByValue)){
+                                        continue;
+                                    }
                                     mc.addRow(new Object[] {
                                             receipt.receipt_id,
                                             receipt.title,
                                             receipt.type,
-                                            receipt.date,
+                                            receipt.priority,
                                             receipt.place,
                                             receipt.amount,
                                             receipt.card_payment,
