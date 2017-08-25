@@ -54,6 +54,7 @@ public class ReceiptItemContract {
         public static String COL_cloud_id = "cloud_id";
 
 
+
         /**
          * The content URI for this table.
          */

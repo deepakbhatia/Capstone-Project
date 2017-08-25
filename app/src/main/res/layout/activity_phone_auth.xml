@@ -32,11 +32,13 @@
             android:id="@+id/status"
             style="@style/ThemeOverlay.MyTextDetail"
             android:textSize="@dimen/signedTextSize"
-            android:text="@string/signed_out" />
+            android:text="@string/signed_out"
+            android:contentDescription="@string/signed_out"/>
 
         <TextView
             android:id="@+id/detail"
             style="@style/ThemeOverlay.MyTextDetail"
+            android:contentDescription="@string/sign_in_process_status_cd"
             tools:text="Firebase User ID: 123456789abc" />
 
     </LinearLayout>
@@ -98,7 +100,7 @@
                     android:layout_weight="1.0"
                     android:text="@string/start_phone_auth"
                     android:layout_margin="@dimen/tag_margin"
-                    android:contentDescription="Tap to Send Your Number to Start SMS Verification"
+                    android:contentDescription="@string/tap_to_send_your_number_to_start_sms_verification_cd"
                     android:background="@drawable/complete_button_drawable"
                     />
 
@@ -110,7 +112,7 @@
                     android:layout_weight="1.0"
                     android:text="@string/verify_phone_auth"
                     android:layout_margin="@dimen/tag_margin"
-                    android:contentDescription="Tap to Send Code to Verify"
+                    android:contentDescription="@string/tap_to_send_code_to_verify_cd"
                     android:background="@drawable/complete_button_drawable"
                     />
 
@@ -122,7 +124,7 @@
                     android:layout_weight="1.0"
                     android:text="@string/resend_phone_auth"
                     android:layout_margin="@dimen/tag_margin"
-                    android:contentDescription="Resend SMS"
+                    android:contentDescription="@string/resend_sms_cd"
                     android:background="@drawable/complete_button_drawable"
                     />
             </LinearLayout>
@@ -148,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sign_out"
                 android:layout_margin="@dimen/tag_margin"
-                android:contentDescription="Tap to Sign Out"
+                android:contentDescription="@string/tap_to_sign_out_cd"
                 android:theme="@style/ThemeOverlay.MyDarkButton"
                 android:background="@drawable/complete_button_drawable"
                 />

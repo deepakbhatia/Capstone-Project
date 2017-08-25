@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 class ReceiptItemsOpenHelper extends SQLiteOpenHelper {
 
 	private static final String NAME = DbSchema.DB_NAME;
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 	
 	public ReceiptItemsOpenHelper(Context context) {
 		super(context, NAME, null, VERSION);

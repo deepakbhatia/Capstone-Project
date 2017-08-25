@@ -12,7 +12,7 @@
         android:drawableBottom="@mipmap/ic_launcher"
         android:layout_gravity="center"
         android:elevation="@dimen/elevation"
-        android:contentDescription="Tap to Open Page to Create Receipt"
+        android:contentDescription="@string/tap_to_open_page_to_create_receipt_cd"
         app:srcCompat="@drawable/ic_add_black_24dp"
         android:tint="@android:color/white"
         android:textColor="@color/colorPrimaryText"

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:contentDescription="Enter Receipt Amount"
+        android:contentDescription="@string/receipt_item_title"
 
         />
 
@@ -32,7 +32,7 @@
         android:gravity="center"
         android:hint="@string/receipt_date_hint"
         android:layout_below="@id/add_edittext_title"
-        android:contentDescription="Choose Receipt Date. Tapping will open a date picker dialog"
+        android:contentDescription="@string/choose_receipt_date_tapping_will_open_a_date_picker_dialog_content_description"
         />
 
     <fragment
@@ -54,7 +54,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:visibility="gone"
-        android:contentDescription="Enter Place of Receipt"
+        android:contentDescription="@string/enter_place_of_receipt_content_description"
 
         />
 
@@ -66,7 +66,7 @@
         android:layout_below="@id/place_autocomplete_fragment"
         android:gravity="center"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:contentDescription="Enter Recetipt Amount"
+        android:contentDescription="@string/enter_receipt_amount_cd"
         />
 
     <CheckBox android:id="@+id/add_card_payment"
@@ -76,7 +76,7 @@
         android:text="@string/add_card_payment"
         android:layout_below="@id/add_edittext_amount"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:contentDescription="Tap to Select or Unselect Card Payment"
+        android:contentDescription="@string/tap_to_select_or_unselect_card_payment_cd"
         />
     <Spinner
         android:id="@+id/receipt_category"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/add_card_payment"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:contentDescription="Tap to Open Spinner to Choose Receipt Category"
+        android:contentDescription="@string/tap_to_open_spinner_to_choose_receipt_category_cd"
         />
     <Button
         android:id="@+id/save_receipt"
@@ -97,7 +97,7 @@
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorPrimaryText"
         android:background="@drawable/complete_button_drawable"
-        android:contentDescription="Tap button to save receipt"
+        android:contentDescription="@string/tap_button_to_save_receipt_cd"
         />
 
 </RelativeLayout>

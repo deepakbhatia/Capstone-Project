@@ -75,6 +75,19 @@
     <string name="auth_storage_message">Receipts will be stored Servers too.</string>
     <string name="autocomplete_place_fragment_hint">Address or Place</string>
     <string name="receipt_created_message">New Receipt Added</string>
+    <string name="choose_receipt_date_tapping_will_open_a_date_picker_dialog_content_description">Choose Receipt Date. Tapping will open a date picker dialog</string>
+    <string name="enter_place_of_receipt_content_description">Enter Place of Receipt</string>
+    <string name="enter_receipt_amount_cd">Enter Receipt Amount</string>
+    <string name="tap_to_select_or_unselect_card_payment_cd">Tap to Select or Unselect Card Payment</string>
+    <string name="tap_to_open_spinner_to_choose_receipt_category_cd">Tap to Open Spinner to Choose Receipt Category</string>
+    <string name="tap_button_to_save_receipt_cd">Tap button to save receipt</string>
+    <string name="tap_to_send_code_to_verify_cd">Tap to Send Code to Verify</string>
+    <string name="tap_to_send_your_number_to_start_sms_verification_cd">Tap to Send Your Number to Start SMS Verification</string>
+    <string name="resend_sms_cd">Resend SMS</string>
+    <string name="tap_to_sign_out_cd">Tap to Sign Out</string>
+    <string name="sign_in_process_status_cd">Sign In Process Status</string>
+    <string name="tap_to_open_page_to_create_receipt_cd">Tap to Open Page to Create Receipt</string>
+    <string name="error_form_filled_message">Check if its filled correctly</string>
 
 
 </resources>

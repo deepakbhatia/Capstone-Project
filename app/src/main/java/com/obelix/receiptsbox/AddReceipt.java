@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -63,6 +64,9 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
     DatePickerDialog datePickerDialog;
     private DatabaseReference mDatabase;
     private String receipt_address;
+    private AddReceipt currentActivity;
+
+    public static String FIREBASE_DATE_SORT_KEY = "priority";
 
     @OnClick(R.id.add_datepicker_date)
     public void showDateDialog(){
@@ -91,7 +95,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
             storeLocalReceiptId(receipt_id++);
         }else{
-//TODO
+            Toast.makeText(this, R.string.error_form_filled_message,Toast.LENGTH_LONG).show();
         }
 
     }
@@ -137,7 +141,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
         receiptMap.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
 
-        receiptMap.put("priority", -Long.valueOf(receipt.date));
+        receiptMap.put(FIREBASE_DATE_SORT_KEY, -Long.valueOf(receipt.date));
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted?1:0);
@@ -188,6 +192,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         ButterKnife.bind(this);
 
 
+        currentActivity = this;
         mDatabase = FirebaseDatabase.getInstance().getReference(firebase_receipts_root);
 
         String locale = getResources().getConfiguration().locale.getCountry();
@@ -205,15 +210,14 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                //Log.i(TAG, "Place: " + place.getName());
 
                 receipt_address  = place.getAddress().toString();
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
+
+                Toast.makeText(currentActivity,status.toString(),Toast.LENGTH_LONG).show();
                 //Log.i(TAG, "An error occurred: " + status);
             }
         });
@@ -232,9 +236,9 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
 
     @Override
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
-        String date_val = datePicker.getDayOfMonth()+"/"+datePicker.getMonth()+"/"+datePicker.getYear();
+        String date_val = day+"/"+(month+1)+"/"+year;
         receiptDate.setText(date_val);
 
 

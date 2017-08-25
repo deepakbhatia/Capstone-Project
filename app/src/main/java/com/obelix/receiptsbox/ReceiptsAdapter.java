@@ -57,12 +57,15 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         this.activity = activity;
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
 
         ViewHolder holder = (ViewHolder) viewHolder;
         cursor.moveToPosition(cursor.getPosition());
         holder.setData(cursor);
+
+
     }
 
     @Override

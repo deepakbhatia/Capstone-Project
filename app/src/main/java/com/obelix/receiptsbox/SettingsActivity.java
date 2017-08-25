@@ -99,7 +99,6 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
         super.onResume();
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
@@ -109,7 +108,6 @@ public class SettingsActivity extends PreferenceActivity
      */
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
 
         getPreferenceManager().getSharedPreferences()

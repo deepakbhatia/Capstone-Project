@@ -267,8 +267,7 @@ public class ReceiptContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        // TODO: Implement this to handle requests for the MIME type of the data
-        // at the given URI.
+
 
         final int match = sURIMatcher.match(uri);
 
@@ -291,7 +290,6 @@ public class ReceiptContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
 
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sURIMatcher.match(uri);
@@ -317,7 +315,6 @@ public class ReceiptContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        // TODO: Implement this to initialize your content provider on startup.
         mOpenHelper = new ReceiptItemsOpenHelper(getContext());
         return true;
     }

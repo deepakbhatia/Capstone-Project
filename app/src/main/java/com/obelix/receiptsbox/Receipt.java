@@ -15,6 +15,8 @@ public class Receipt  {
     public boolean archived;
     public boolean deleted;
 
+    public long priority;
+
     public Receipt(){
 
     }

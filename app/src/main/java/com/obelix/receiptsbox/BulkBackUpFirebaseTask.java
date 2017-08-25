@@ -60,6 +60,7 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_place, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_place)));
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_title, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_title)));
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_type, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_type)));
+        receiptValue.put(AddReceipt.FIREBASE_DATE_SORT_KEY, -Long.valueOf(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
 
 
 

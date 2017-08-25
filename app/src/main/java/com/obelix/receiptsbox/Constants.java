@@ -22,4 +22,7 @@ public class Constants {
 
     public static Boolean authenticated = false;
 
+    public static String baseUrl = "https://receiptsbox-e7d6f.firebaseio.com/";
+    public static String receiptsEndpoint = "receipts";
+
 }

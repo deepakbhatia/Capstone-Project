@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +29,14 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.provider.BaseColumns._ID;
+import static com.obelix.receiptsbox.Constants.receiptsEndpoint;
 
 /**
  * A fragment representing a list of Items.
@@ -42,14 +44,14 @@ import static android.provider.BaseColumns._ID;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ReceiptItemFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class ReceiptItemFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor>,
+        QueryFirebaseTask.QueryCompleteInterface{
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_NEW_RECEIPTS = "add_receipts";
     private static final String NOT_EXISTS = "";
 
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
@@ -90,7 +92,6 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
 
 
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static ReceiptItemFragment newInstance(int columnCount, boolean showNew) {
         ReceiptItemFragment fragment = new ReceiptItemFragment();
@@ -124,8 +125,6 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
         contentResolver = getActivity().getContentResolver();
         if(!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
-
-        Log.d(TAG, "Args:"+getArguments().getBoolean(ARG_NEW_RECEIPTS));
 
         if(getArguments().getBoolean(ARG_NEW_RECEIPTS))
             getLoaderManager().initLoader(RECEIPT_LOADER, null, this);
@@ -271,6 +270,9 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ReceiptActions receiptActions){
 
+        mDatabase = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl(Constants.baseUrl+receiptsEndpoint);
+
         HashMap<Long, ContentValues> receiptItems = receiptActions.selectedItems;
 
         Set<Long> receiptIds = receiptItems.keySet();
@@ -282,16 +284,20 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
 
             ContentValues receiptValues = receiptItems.get(receiptId);
 
+            String cloud_id = receiptValues.getAsString(ReceiptItemContract.ReceiptItems.COL_cloud_id);
+
             //ContentResolver cr = getActivity().getContentResolver();
             if(receiptActions.archive && contentResolver!=null)
             {
 
                 if(Constants.authenticated){
 
-                    String cloud_id = receiptValues.getAsString(ReceiptItemContract.ReceiptItems.COL_cloud_id);
 
-                    if(cloud_id.equals(NOT_EXISTS)){
+                    if(!cloud_id.equals(NOT_EXISTS)){
+                        Map<String,Object> receiptMap = new HashMap<String,Object>();
+                        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, 1);
 
+                        mDatabase.child(cloud_id).updateChildren(receiptMap);
                     }
 
                 }
@@ -307,6 +313,7 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
             else if(receiptActions.delete){
 
                 if(Constants.authenticated){
+                    mDatabase.child(cloud_id).removeValue();
 
                 }
                 {
@@ -319,6 +326,13 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
 
         getLoaderManager().restartLoader(RECEIPT_LOADER, null, this);
     }
+
+    @Override
+    public void queryCompleted(MatrixCursor matrixCursor) {
+        if(matrixCursor!=null)
+        mReceiptAdapter.swapCursor(matrixCursor);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -330,7 +344,6 @@ public class ReceiptItemFragment extends Fragment implements LoaderManager.Loade
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Receipt item);
     }
 
