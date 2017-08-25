@@ -225,8 +225,6 @@ public class ReceiptItemFragment extends Fragment implements
 
         String sortOrder = ReceiptItemContract.ReceiptItems.COL_date + " DESC";
 
-        String selection = null;
-        String selectionArgs[] = null;
         Uri receiptUri = ReceiptItemContract.ReceiptItems.buildReceiptWithDate(
                 System.currentTimeMillis());
 

@@ -9,17 +9,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorViewFocus"
     tools:context=".AddReceipt">
 
     <EditText android:id="@+id/add_edittext_title"
         android:hint="@string/receipt_item_title"
-        android:singleLine="true"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:contentDescription="@string/receipt_item_title"
 
         />
 
@@ -32,7 +30,6 @@
         android:gravity="center"
         android:hint="@string/receipt_date_hint"
         android:layout_below="@id/add_edittext_title"
-        android:contentDescription="@string/choose_receipt_date_tapping_will_open_a_date_picker_dialog_content_description"
         />
 
     <fragment
@@ -47,14 +44,13 @@
         />
     <EditText android:id="@+id/add_edittext_place"
         android:hint="@string/add_edittext_place"
-        android:singleLine="true"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_datepicker_date"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:visibility="gone"
-        android:contentDescription="@string/enter_place_of_receipt_content_description"
 
         />
 
@@ -66,12 +62,10 @@
         android:layout_below="@id/place_autocomplete_fragment"
         android:gravity="center"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:contentDescription="@string/enter_receipt_amount_cd"
         />
 
     <CheckBox android:id="@+id/add_card_payment"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="@string/add_card_payment"
         android:layout_below="@id/add_edittext_amount"

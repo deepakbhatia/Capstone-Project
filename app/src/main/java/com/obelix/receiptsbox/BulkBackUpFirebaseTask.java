@@ -43,11 +43,13 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         return false;
     }
 
+     Map<String, Object> receiptValue ;
 
-    public void setData(Cursor cursor) {
+    ContentValues receiptValueContent ;
 
+    private void setData(Cursor cursor) {
 
-        Map<String, Object> receiptValue = new HashMap<>();
+        receiptValue = new HashMap<>();
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_ID, cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_ID)));
@@ -63,8 +65,8 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         receiptValue.put(AddReceipt.FIREBASE_DATE_SORT_KEY, -Long.valueOf(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
 
 
+        receiptValueContent = new ContentValues();
 
-        ContentValues receiptValueContent = new ContentValues();
 
         receiptValueContent.put(ReceiptItemContract.ReceiptItems.COL_ID, cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_ID)));
 
@@ -89,9 +91,6 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
             childUpdates.put( key, receiptValue);
 
 
-            long local_db_item_id = Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID));
-            mContext.getContentResolver().update(ReceiptItemContract.ReceiptItems.buildReceipt(Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID))),receiptValueContent, ReceiptItemContract.ReceiptItems.TABLE_NAME+
-                    "." + ReceiptItemContract.ReceiptItems.COL_ID + " = ?",new String[]{String.valueOf(local_db_item_id)});
 
             //childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
             //mDatabase.setValue(receiptValue);
@@ -100,6 +99,9 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                     if(databaseError == null){
+                        long local_db_item_id = Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID));
+                        mContext.getContentResolver().update(ReceiptItemContract.ReceiptItems.buildReceipt(Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID))),receiptValueContent, ReceiptItemContract.ReceiptItems.TABLE_NAME+
+                                "." + ReceiptItemContract.ReceiptItems.COL_ID + " = ?",new String[]{String.valueOf(local_db_item_id)});
 
                     }
                 }

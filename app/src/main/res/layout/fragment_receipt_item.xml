@@ -46,8 +46,6 @@
             style="@style/ReceiptCardStyle"
 
             android:layout_below="@+id/price_receipt"
-
-            android:singleLine="false"
             tool:text="ul. Prusa, 43-300, Bielsko-Biala, Poland"
             android:padding="@dimen/elemPadding"
             android:textAppearance="?attr/textAppearanceListItemSmall"

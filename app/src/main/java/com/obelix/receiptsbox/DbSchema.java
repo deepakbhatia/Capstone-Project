@@ -8,21 +8,21 @@ interface DbSchema {
 
     String TBL_ITEMS = "receipts";
 
-	public static String COL_ID = BaseColumns._ID;
-    public static String COL_title = "title";
+	String COL_ID = BaseColumns._ID;
+    String COL_title = "title";
 
-    public static String COL_type = "type";
+    String COL_type = "type";
 
-    public static String COL_date = "date";
-    public static String COL_place = "place";
-    public static String COL_amount = "amount";
+    String COL_date = "date";
+    String COL_place = "place";
+    String COL_amount = "amount";
 
-    public static String COL_card_payment = "card_payment";
-    public static String COL_archived = "archived";
+    String COL_card_payment = "card_payment";
+    String COL_archived = "archived";
 
-    public static String COL_deleted = "deleted";
+	String COL_deleted = "deleted";
 
-	public static String COL_cloud_id = "cloud_id";
+	String COL_cloud_id = "cloud_id";
 
     // BE AWARE: Normally you would store the LOOKUP_KEY
 	// of a contact from the device. But this would

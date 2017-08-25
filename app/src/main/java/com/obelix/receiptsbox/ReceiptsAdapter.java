@@ -25,7 +25,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +65,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
 
-        ViewHolder holder = (ViewHolder) viewHolder;
+        ViewHolder holder =  viewHolder;
         cursor.moveToPosition(cursor.getPosition());
         holder.setData(cursor);
 
@@ -143,10 +142,8 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
 
-            Set viewKeys = Constants.selectedItemViews.keySet();
-
             for(int i=0;i<Constants.selectedItemViewsList.size();i++){
-                View v = (View) Constants.selectedItemViewsList.get(i);
+                View v = Constants.selectedItemViewsList.get(i);
 
                 v.setSelected(false);
 

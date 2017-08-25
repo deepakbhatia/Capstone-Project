@@ -29,12 +29,12 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
     public QueryCompleteInterface qInterface;
 
 
-    public QueryFirebaseTask(ReceiptItemFragment activity){
-        qInterface = (QueryCompleteInterface)activity;
+    public QueryFirebaseTask(ReceiptItemFragment fragment){
+        qInterface = fragment;
     }
 
     public interface QueryCompleteInterface{
-        public void queryCompleted(MatrixCursor matrixCursor);
+        void queryCompleted(MatrixCursor matrixCursor);
     }
 
     static String sortBy;
@@ -76,28 +76,29 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
                                 while(snapshotIt.hasNext()){
 
 
-                                    Log.d("QueryFire","Tets");
-
                                     DataSnapshot currentItem = (DataSnapshot) snapshotIt.next();
 
                                     Receipt receipt = currentItem.getValue(Receipt.class);
 
-                                    if(!sortBy.equals(RECEIPT_SORT_TYPE) && receipt.priority > Long.parseLong(sortByValue)){
-                                        continue;
-                                    }
-                                    mc.addRow(new Object[] {
-                                            receipt.receipt_id,
-                                            receipt.title,
-                                            receipt.type,
-                                            receipt.priority,
-                                            receipt.place,
-                                            receipt.amount,
-                                            receipt.card_payment,
-                                            receipt.archived,
-                                            receipt.deleted,
-                                            receipt.cloud_id
+                                    if(receipt!=null){
+                                        if(!sortBy.equals(RECEIPT_SORT_TYPE) && receipt.priority > Long.parseLong(sortByValue)){
+                                            continue;
+                                        }
+                                        mc.addRow(new Object[] {
+                                                receipt.receipt_id,
+                                                receipt.title,
+                                                receipt.type,
+                                                receipt.priority,
+                                                receipt.place,
+                                                receipt.amount,
+                                                receipt.card_payment,
+                                                receipt.archived,
+                                                receipt.deleted,
+                                                receipt.cloud_id
 
-                                    });
+                                        });
+
+                                    }
 
 
                                 }

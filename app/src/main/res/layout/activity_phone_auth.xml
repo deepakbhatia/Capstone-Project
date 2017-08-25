@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorViewFocus"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -72,7 +71,6 @@
                     android:hint="@string/hint_phone_number"
                     android:layout_weight="1.0"
                     android:inputType="phone"
-                    android:contentDescription="Enter your Phone Number"
                     />
 
                 <EditText
@@ -82,7 +80,7 @@
                     android:hint="@string/hint_verification_code"
                     android:layout_weight="1.0"
                     android:inputType="number"
-                    android:contentDescription="Enter Verification Code"/>
+                    />
 
             </LinearLayout>
 

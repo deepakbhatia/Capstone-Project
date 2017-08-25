@@ -1,7 +1,6 @@
 package com.obelix.receiptsbox;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,7 +29,7 @@ public class CentralActivity extends AppCompatActivity implements
 
     private static final String AUTHENTICATED = "authenticated";
     private TextView mTextMessage;
-    FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentManager fragmentManager = getSupportFragmentManager();
     //Content Loading
     private static final int RECEIPT_LOADER = 0;
 
@@ -42,9 +41,9 @@ public class CentralActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             fragmentManager = getSupportFragmentManager();
-            ReceiptItemFragment receiptItemFragment = null;
+            ReceiptItemFragment receiptItemFragment;
 
-            ReceiptItemFragment archivedReceiptItemFragment = null;
+            ReceiptItemFragment archivedReceiptItemFragment;
             switch (item.getItemId()) {
 
 
@@ -195,25 +194,5 @@ public class CentralActivity extends AppCompatActivity implements
         startActivityForResult(receiptIntent, ADD_RECEIPT_CODE);
 
     }
-
-    private int getLocalReceiptId(){
-        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        return sharedpreferences.getInt(receipt_id,0);
-    }
-    private void storeLocalReceiptId(int count){
-
-        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-
-        editor.putInt(receipt_id, count);
-
-        editor.commit();
-    }
-
-
-
-
 
 }

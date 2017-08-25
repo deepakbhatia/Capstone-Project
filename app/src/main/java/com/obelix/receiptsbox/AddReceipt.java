@@ -74,7 +74,6 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
     @OnClick(R.id.save_receipt)
     public void saveReceipt(){
         String date = String.valueOf(receiptDate.getTag());
-        String place = edittextPlace.getText().toString();
         String amount_string = edittextAmount.getText().toString();
 
         String title = edittextTitle.getText().toString();
@@ -84,7 +83,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         String type = String.valueOf(receipt_category.getSelectedItem());
 
         int receipt_id = getLocalReceiptId();
-        if(type!=null && date!=null && (title!=null && !title.equals(""))  && receipt_address!=null && (amount_string!=null && !amount_string.equals(""))){
+        if(type!=null && date!=null && (!title.equals(""))  && receipt_address!=null && ( !amount_string.equals(""))){
             double amount = Double.parseDouble(amount_string);
 
             Receipt receipt = new Receipt(String.valueOf(receipt_id),type,title,date,receipt_address,amount,card_payment.isChecked()?1:0);
@@ -111,7 +110,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
         editor.putInt(receipt_id, count);
 
-        editor.commit();
+        editor.apply();
     }
     private void storeContentValues(Receipt receipt){
 

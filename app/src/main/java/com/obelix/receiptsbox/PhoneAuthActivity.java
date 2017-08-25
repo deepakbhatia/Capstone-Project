@@ -293,7 +293,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean(AUTHENTICATED,authenticated);
-        ed.commit();
+        ed.apply();
     }
     // [END resend_verification]
 
@@ -417,7 +417,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mPhoneNumberViews.setVisibility(View.VISIBLE);
             mSignedInViews.setVisibility(View.GONE);
 
-            mStatusText.setText(R.string.signed_out);;
+            mStatusText.setText(R.string.signed_out);
         } else {
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
