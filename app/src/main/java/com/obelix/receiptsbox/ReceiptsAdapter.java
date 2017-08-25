@@ -45,7 +45,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
     private String TAG = "ReceiptsAdapter";
     private AppCompatActivity activity;
-    private long actionReceiptId;
 
     public final static String FOOD_CATEGORY_LABEL = "Food";
     public final static String HEALTH_CATEGORY_LABEL = "Health";
@@ -238,7 +237,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             receiptValue.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_cloud_id)));
 
             mReceiptCard.setTag(receiptValue);
-            actionReceiptId = cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_ID));
             String tag = cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_type));
             mReceiptTagView.setText(tag);
 
@@ -327,8 +325,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             // Start the CAB using the ActionMode.Callback defined above
             view.setSelected(true);
 
-
-            Log.d(TAG, "onLongClick:"+view.getId());
 
 
             return true;

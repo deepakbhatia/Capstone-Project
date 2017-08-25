@@ -6,7 +6,7 @@ public class Receipt  {
 
     public String receipt_id;
     public String title;
-    public String date;
+    public long date;
     public String place;
     public String type;
 
@@ -20,7 +20,7 @@ public class Receipt  {
 
     }
 
-    public Receipt(String _id, String type, String title, String date, String place, double amount, int card_payment) {
+    public Receipt(String _id, String type, String title, long date, String place, double amount, int card_payment) {
         this.receipt_id = _id;
         this.type = type;
         this.title = title;
@@ -30,32 +30,5 @@ public class Receipt  {
         this.amount = amount;
         this.card_payment = card_payment;
     }
-
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-
 
 }

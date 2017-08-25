@@ -34,6 +34,8 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         mDatabase = FirebaseDatabase.getInstance().getReference("receipts");
 
         Cursor cursor =   objects[0];
+        cursor.moveToFirst();
+
         while (!cursor.isAfterLast()){
 
             setData(cursor);
@@ -62,7 +64,7 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_place, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_place)));
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_title, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_title)));
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_type, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_type)));
-        receiptValue.put(AddReceipt.FIREBASE_DATE_SORT_KEY, -Long.valueOf(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
+        receiptValue.put(AddReceipt.FIREBASE_DATE_SORT_KEY, Long.valueOf(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
 
 
         receiptValueContent = new ContentValues();
@@ -78,9 +80,12 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         receiptValueContent.put(ReceiptItemContract.ReceiptItems.COL_place, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_place)));
         receiptValueContent.put(ReceiptItemContract.ReceiptItems.COL_title, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_title)));
         receiptValueContent.put(ReceiptItemContract.ReceiptItems.COL_type, cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_type)));
+        //receiptValueContent.put(AddReceipt.FIREBASE_DATE_SORT_KEY, -Long.valueOf(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
 
         if(Constants.authenticated){
-            String key = mDatabase.push().getKey();
+            String key = cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_cloud_id));
+            if(key == null)
+                key = mDatabase.push().getKey();
 
             receiptValue.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, key);
 
@@ -95,13 +100,14 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
             //childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
             //mDatabase.setValue(receiptValue);
 
+            long local_db_item_id = Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID));
+            mContext.getContentResolver().update(ReceiptItemContract.ReceiptItems.buildReceipt(Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID))),receiptValueContent, ReceiptItemContract.ReceiptItems.TABLE_NAME+
+                    "." + ReceiptItemContract.ReceiptItems.COL_ID + " = ?",new String[]{String.valueOf(local_db_item_id)});
+
             mDatabase.updateChildren(childUpdates, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                     if(databaseError == null){
-                        long local_db_item_id = Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID));
-                        mContext.getContentResolver().update(ReceiptItemContract.ReceiptItems.buildReceipt(Long.parseLong(""+receiptValue.get(ReceiptItemContract.ReceiptItems.COL_ID))),receiptValueContent, ReceiptItemContract.ReceiptItems.TABLE_NAME+
-                                "." + ReceiptItemContract.ReceiptItems.COL_ID + " = ?",new String[]{String.valueOf(local_db_item_id)});
 
                     }
                 }

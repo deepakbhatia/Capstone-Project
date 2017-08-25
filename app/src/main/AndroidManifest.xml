@@ -22,7 +22,12 @@
         <activity
             android:name=".AddReceipt"
             android:label="@string/title_activity_add"
-             />
+            android:parentActivityName=".CentralActivity"
+             >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CentralActivity" />
+            </activity>
 
         <activity
             android:name=".CentralActivity"

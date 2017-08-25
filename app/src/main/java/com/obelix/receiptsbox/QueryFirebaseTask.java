@@ -2,7 +2,6 @@ package com.obelix.receiptsbox;
 
 import android.database.MatrixCursor;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,8 +44,6 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
 
         final String sortByValue = params[1];
 
-        Log.d("QueryFire",sortBy+":"+sortByValue);
-
         mRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.baseUrl+receiptsEndpoint);
 
@@ -54,11 +51,9 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
 
 
         if(sortBy.equals(RECEIPT_SORT_TYPE)){
-            Log.d("sortBy",sortBy+":"+sortByValue);
-
-            qRef = mRef.orderByChild(sortBy).equalTo(sortByValue) ;
+            qRef = mRef.orderByChild(sortBy).equalTo(sortByValue); ;
         }else{
-            qRef = mRef.orderByChild(sortBy).startAt(Long.parseLong(sortByValue));
+            qRef = mRef.orderByChild(sortBy).endAt(Long.parseLong(sortByValue));
         }
 
         qRef.addListenerForSingleValueEvent(
@@ -66,8 +61,6 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-                                Log.d("QueryFire:onDataChange","---");
 
                                 MatrixCursor mc = new MatrixCursor(ReceiptItemFragment.PROJECTION_ALL); // properties from the JSONObjects
 
@@ -80,15 +73,16 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
 
                                     Receipt receipt = currentItem.getValue(Receipt.class);
 
-                                    if(receipt!=null){
-                                        if(!sortBy.equals(RECEIPT_SORT_TYPE) && receipt.priority > Long.parseLong(sortByValue)){
+                                    if(receipt!=null ){
+                                        if(!sortBy.equals(RECEIPT_SORT_TYPE) && receipt.date > Long.parseLong(sortByValue)){
                                             continue;
                                         }
+
                                         mc.addRow(new Object[] {
                                                 receipt.receipt_id,
                                                 receipt.title,
                                                 receipt.type,
-                                                receipt.priority,
+                                                receipt.date,
                                                 receipt.place,
                                                 receipt.amount,
                                                 receipt.card_payment,
@@ -123,8 +117,4 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
         return null;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-    }
 }

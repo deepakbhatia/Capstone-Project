@@ -73,7 +73,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
     }
     @OnClick(R.id.save_receipt)
     public void saveReceipt(){
-        String date = String.valueOf(receiptDate.getTag());
+        long date = Long.parseLong(String.valueOf(receiptDate.getTag()));
         String amount_string = edittextAmount.getText().toString();
 
         String title = edittextTitle.getText().toString();
@@ -83,7 +83,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         String type = String.valueOf(receipt_category.getSelectedItem());
 
         int receipt_id = getLocalReceiptId();
-        if(type!=null && date!=null && (!title.equals(""))  && receipt_address!=null && ( !amount_string.equals(""))){
+        if(type!=null && String.valueOf(date)!=null && (!title.equals(""))  && receipt_address!=null && ( !amount_string.equals(""))){
             double amount = Double.parseDouble(amount_string);
 
             Receipt receipt = new Receipt(String.valueOf(receipt_id),type,title,date,receipt_address,amount,card_payment.isChecked()?1:0);
@@ -114,51 +114,56 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
     }
     private void storeContentValues(Receipt receipt){
 
-        Map<String, Object> receiptMap = new HashMap<>();
 
         ContentValues receiptValue = new ContentValues();
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, receipt.cloud_id);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, receipt.cloud_id);
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_amount, receipt.amount);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_amount, receipt.amount);
 
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_date, ReceiptsAdapter.getDate(Long.valueOf(receipt.date)));
 
-        receiptMap.put(FIREBASE_DATE_SORT_KEY,Long.valueOf(receipt.date));
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_place, receipt.place);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_place, receipt.place);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_title, receipt.title);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_title, receipt.title);
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_type, receipt.type);
-        receiptMap.put(ReceiptItemContract.ReceiptItems.COL_type, receipt.type);
 
 
         if(Constants.authenticated){
+
+            Map<String, Object> receiptMap = new HashMap<>();
+
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, receipt.cloud_id);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_amount, receipt.amount);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_card_payment, receipt.card_payment);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_place, receipt.place);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_title, receipt.title);
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_type, receipt.type);
+            receiptMap.put(FIREBASE_DATE_SORT_KEY,Long.valueOf(receipt.date));
+
             String key = mDatabase.push().getKey();
+
+            receiptMap.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, key);
 
             receiptValue.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, key);
 

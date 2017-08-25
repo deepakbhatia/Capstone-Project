@@ -519,7 +519,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             Loader<Cursor> loader,
             Cursor cursor) {
 
-        cursor.moveToFirst();
 
         new BulkBackUpFirebaseTask(this).execute(cursor);
 

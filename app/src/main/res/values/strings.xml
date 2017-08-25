@@ -88,6 +88,7 @@
     <string name="reload_message">Tap the Tab to reload</string>
     <string name="tap_to_open_page_to_create_receipt_content_description">Tap to Open Page to Create Receipt</string>
     <string name="add_receipts_cd">Add Receipts</string>
+    <string name="local_deletion_alert">Receipts deleted when not logged in, will be available in cloud, if they are backed up previously.</string>
 
 
 </resources>
