@@ -4,7 +4,7 @@ public class Receipt  {
 
     public String cloud_id;
 
-    public String receipt_id;
+    public long _id;
     public String title;
     public long date;
     public String place;
@@ -20,8 +20,8 @@ public class Receipt  {
 
     }
 
-    public Receipt(String _id, String type, String title, long date, String place, double amount, int card_payment) {
-        this.receipt_id = _id;
+    public Receipt(long _id, String type, String title, long date, String place, double amount, int card_payment) {
+        this._id = _id;
         this.type = type;
         this.title = title;
 
@@ -30,5 +30,6 @@ public class Receipt  {
         this.amount = amount;
         this.card_payment = card_payment;
     }
+
 
 }

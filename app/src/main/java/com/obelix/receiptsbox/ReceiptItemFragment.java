@@ -295,11 +295,11 @@ public class ReceiptItemFragment extends Fragment implements
                         Map<String,Object> receiptMap = new HashMap<String,Object>();
                         receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, 1);
 
-                        mDatabase.child(cloud_id).updateChildren(receiptMap);
+                        mDatabase.child(Constants.uid).child(cloud_id).updateChildren(receiptMap);
                     }
 
                 }
-               
+
                 {
 
                     receiptValues.put(ReceiptItemContract.ReceiptItems.COL_archived,1);
@@ -312,7 +312,7 @@ public class ReceiptItemFragment extends Fragment implements
             else if(receiptActions.delete){
 
                 if(Constants.authenticated){
-                    mDatabase.child(cloud_id).removeValue();
+                    mDatabase.child(Constants.uid).child(cloud_id).removeValue();
 
                 }else{
                     Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.local_deletion_alert),Toast.LENGTH_LONG).show();

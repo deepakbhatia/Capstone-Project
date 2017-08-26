@@ -61,12 +61,15 @@ public class ReceiptContentProvider extends ContentProvider {
 
     private static final int RECEIPTS_ARCHIVED = 1009;
 
+    private static final int RECEIPTS_TYPE_ALL_DATE = 1010 ;
+
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, RECEIPTS);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", RECEIPT_ID);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/types/*/#", RECEIPTS_TYPE_DATE);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/date/*", RECEIPTS_DATE);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/archived/*", RECEIPTS_ARCHIVED);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/all/*", RECEIPTS_TYPE_ALL_DATE);
 
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/amount/*/#", RECEIPTS_AMOUNT_TYPE);
 
@@ -88,6 +91,11 @@ public class ReceiptContentProvider extends ContentProvider {
     private static final String sDaySelection =
             ReceiptItemContract.ReceiptItems.TABLE_NAME+
                     "." + ReceiptItemContract.ReceiptItems.COL_archived + " = ? AND " +
+                    ReceiptItemContract.ReceiptItems.COL_date + " <= ? ";
+
+    private static final String sAllSelection =
+            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+                    "."  +
                     ReceiptItemContract.ReceiptItems.COL_date + " <= ? ";
 
     //type = ? AND date >= ?
@@ -129,6 +137,27 @@ public class ReceiptContentProvider extends ContentProvider {
         {
             selectionArgs = new String[]{String.valueOf(0),Long.toString(startDate)};
             selection = sDaySelection;
+        }
+
+        return sReceiptQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    private Cursor getReceiptsAll(Uri uri, String[] projection, String sortOrder) {
+        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri,2);
+
+        String[] selectionArgs;
+        String selection;
+
+        {
+            selectionArgs = new String[]{Long.toString(startDate)};
+            selection = sAllSelection;
         }
 
         return sReceiptQueryBuilder.query(mOpenHelper.getReadableDatabase(),
@@ -362,6 +391,10 @@ public class ReceiptContentProvider extends ContentProvider {
             case RECEIPTS_DATE: {
 
                 retCursor = getReceiptsByDate(uri, projection, sortOrder);
+                break;
+            }
+            case RECEIPTS_TYPE_ALL_DATE:{
+                retCursor = getReceiptsAll(uri, projection, sortOrder);
                 break;
             }
             // "location"

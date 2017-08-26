@@ -2,6 +2,7 @@ package com.obelix.receiptsbox;
 
 import android.database.MatrixCursor;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,16 +52,15 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
 
 
         if(sortBy.equals(RECEIPT_SORT_TYPE)){
-            qRef = mRef.orderByChild(sortBy).equalTo(sortByValue); ;
+            qRef = mRef.child(Constants.uid).orderByChild(sortBy).equalTo(sortByValue); ;
         }else{
-            qRef = mRef.orderByChild(sortBy).endAt(Long.parseLong(sortByValue));
+            qRef = mRef.child(Constants.uid).orderByChild(sortBy).endAt(Long.parseLong(sortByValue));
         }
 
         qRef.addListenerForSingleValueEvent(
                         new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-
 
                                 MatrixCursor mc = new MatrixCursor(ReceiptItemFragment.PROJECTION_ALL); // properties from the JSONObjects
 
@@ -78,8 +78,9 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
                                             continue;
                                         }
 
+                                        Log.d("mc","key:"+receipt._id);
                                         mc.addRow(new Object[] {
-                                                receipt.receipt_id,
+                                                receipt._id,
                                                 receipt.title,
                                                 receipt.type,
                                                 receipt.date,

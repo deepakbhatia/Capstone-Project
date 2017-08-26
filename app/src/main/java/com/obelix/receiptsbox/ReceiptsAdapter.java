@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -273,7 +272,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         @Override
         public void onClick(View view) {
 
-            Log.d(TAG,""+Constants.selectedItems.size()+":"+Constants.selectedItemViews.size());
+
             ContentValues receiptVals = (ContentValues)view.getTag();
 
             if(Constants.selectedItems.size()!=0 && !Constants.selectedItems.containsKey(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID))){
@@ -293,9 +292,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
             }
 
-            Log.d(TAG,""+Constants.selectedItems.size()+":"+Constants.selectedItemViews.size());
-
-
         }
 
         @Override
@@ -310,7 +306,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             mActionMode = activity.startSupportActionMode( mActionModeCallback);
 
 
-            Log.d(TAG,view.getTag().getClass().getName() );
 
             ContentValues receiptVals = (ContentValues)view.getTag();
 

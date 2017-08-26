@@ -28,7 +28,8 @@ public class CentralActivity extends AppCompatActivity implements
 
 
     private static final String AUTHENTICATED = "authenticated";
-    private TextView mTextMessage;
+             private static final String AUTHENTICATED_USER = "authenticated_user";
+             private TextView mTextMessage;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     //Content Loading
     private static final int RECEIPT_LOADER = 0;
@@ -137,6 +138,8 @@ public class CentralActivity extends AppCompatActivity implements
         SharedPreferences sp = getSharedPreferences(AUTHENTICATED,MODE_PRIVATE);
 
         Constants.authenticated = sp.getBoolean(AUTHENTICATED,false);
+
+        Constants.uid = sp.getString(AUTHENTICATED_USER,null);
 
         Log.d(TAG,""+Constants.authenticated);
         return Constants.authenticated;

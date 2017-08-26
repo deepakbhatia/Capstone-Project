@@ -103,6 +103,11 @@ public class ReceiptItemContract {
                     .appendPath("archived")
                     .appendPath(Long.toString(date)).build();
         }
+        public static Uri buildAllReceipts(long date) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("all")
+                    .appendPath(Long.toString(date)).build();
+        }
 
         public static Uri buildReceiptWithTypeAndDate(String type, long date) {
             return CONTENT_URI.buildUpon()

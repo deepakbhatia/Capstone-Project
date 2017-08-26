@@ -54,6 +54,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private static final int STATE_SIGNIN_FAILED = 5;
     private static final int STATE_SIGNIN_SUCCESS = 6;
     private static final String AUTHENTICATED = "authenticated";
+    private static final String AUTHENTICATED_USER = "authenticated_user" ;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -293,6 +294,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean(AUTHENTICATED,authenticated);
+
+        ed.putString(AUTHENTICATED_USER,Constants.uid);
+
         ed.apply();
     }
     // [END resend_verification]
@@ -310,10 +314,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
                             Toast.makeText(currentActivity, getResources().getString(R.string.auth_storage_message),Toast.LENGTH_LONG).show();
 
-                            getLoaderManager().initLoader(RECEIPT_LOADER, null, currentActivity);
+                            getLoaderManager().restartLoader(RECEIPT_LOADER, null, currentActivity);
 
                             FirebaseUser user = task.getResult().getUser();
 
+                            Constants.uid = user.getUid();
                             Constants.authenticated = true;
 
                             storeAuthentication(true);
@@ -502,10 +507,14 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
+        Log.d(TAG,"onCreateLoader:"+i);
         String sortOrder = ReceiptItemContract.ReceiptItems.COL_date + " DESC";
 
-        Uri receiptUri = ReceiptItemContract.ReceiptItems.buildReceiptWithDate(
+        Uri receiptUri = ReceiptItemContract.ReceiptItems.buildAllReceipts(
                 System.currentTimeMillis());
+
+        Log.d(TAG,"onCreateLoader:"+receiptUri);
+
         return new CursorLoader(this,
                 receiptUri,
                 PROJECTION_ALL,
@@ -519,6 +528,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             Loader<Cursor> loader,
             Cursor cursor) {
 
+
+        Log.d(TAG,"onLoadFinished:"+cursor.isAfterLast());
 
         new BulkBackUpFirebaseTask(this).execute(cursor);
 

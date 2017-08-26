@@ -86,7 +86,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         if(type!=null && String.valueOf(date)!=null && (!title.equals(""))  && receipt_address!=null && ( !amount_string.equals(""))){
             double amount = Double.parseDouble(amount_string);
 
-            Receipt receipt = new Receipt(String.valueOf(receipt_id),type,title,date,receipt_address,amount,card_payment.isChecked()?1:0);
+            Receipt receipt = new Receipt(receipt_id,type,title,date,receipt_address,amount,card_payment.isChecked()?1:0);
 
             storeContentValues(receipt);
 
@@ -172,7 +172,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
             //childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
             //mDatabase.setValue(receiptValue);
 
-            mDatabase.updateChildren(childUpdates);
+            mDatabase.child(Constants.uid).updateChildren(childUpdates);
         }
 
         getContentResolver().insert(ReceiptItemContract.CONTENT_URI, receiptValue);
