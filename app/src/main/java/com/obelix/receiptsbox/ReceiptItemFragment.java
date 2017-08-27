@@ -142,6 +142,8 @@ public class ReceiptItemFragment extends Fragment implements
 
     public static String RECEIPT_SORT_TYPE = "type";
 
+    public static String RECEIPT_FIREBASE_SORT = "priority";
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SortBy sortBy){
 //        Toast.makeText(getActivity(), sortBy.type+":"+sortBy.type, Toast.LENGTH_SHORT).show();
@@ -149,7 +151,7 @@ public class ReceiptItemFragment extends Fragment implements
         if(sortBy.type.contains(RECEIPT_SORT_DATE))
         {
             if(Constants.authenticated){
-                new QueryFirebaseTask(this).execute("priority",String.valueOf((Long.parseLong(sortBy.value))));
+                new QueryFirebaseTask(this).execute(RECEIPT_FIREBASE_SORT,String.valueOf((Long.parseLong(sortBy.value))));
             }else{
                 Bundle bundle = new Bundle();
 
@@ -325,7 +327,7 @@ public class ReceiptItemFragment extends Fragment implements
             }
         }
 
-
+        if(isAdded())
         getLoaderManager().restartLoader(RECEIPT_LOADER, null, this);
     }
 

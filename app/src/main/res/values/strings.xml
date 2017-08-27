@@ -55,7 +55,7 @@
     <string name="start_phone_auth" translatable="true">Start</string>
     <string name="verify_phone_auth" translatable="true">Verify</string>
     <string name="resend_phone_auth" translatable="true">Resend</string>
-    <string name="hint_phone_number" translatable="true">Phone Number</string>
+    <string name="hint_phone_number" translatable="true">+48 300 300 300, Phone Number </string>
     <string name="hint_verification_code" translatable="true">Verification Code</string>
     <string name="status_code_sent" translatable="true">Code Sent</string>
     <string name="status_verification_failed" translatable="true">Verification failed</string>

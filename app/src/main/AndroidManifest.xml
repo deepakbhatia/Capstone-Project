@@ -31,7 +31,8 @@
 
         <activity
             android:name=".CentralActivity"
-            android:label="@string/title_activity_central">
+            android:label="@string/title_activity_central"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +51,8 @@
             android:label="@string/title_activity_settings"></activity>
 
         <activity android:name=".PhoneAuthActivity"
-            android:parentActivityName=".CentralActivity">
+            android:parentActivityName=".CentralActivity"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CentralActivity" />
