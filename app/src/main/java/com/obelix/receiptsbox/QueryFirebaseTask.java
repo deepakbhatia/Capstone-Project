@@ -78,7 +78,6 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
                                             continue;
                                         }
 
-                                        Log.d("mc","key:"+receipt._id);
                                         mc.addRow(new Object[] {
                                                 receipt._id,
                                                 receipt.title,

@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,8 +39,6 @@ public class BulkBackUpFirebaseTask extends AsyncTask<Cursor, Void, Boolean> {
         int count = 0;
         while (!cursor.isAfterLast()){
 
-
-            Log.d("Bulk",""+count++);
             setData(cursor);
 
             cursor.moveToNext();

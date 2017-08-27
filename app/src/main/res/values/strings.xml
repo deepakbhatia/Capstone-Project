@@ -89,6 +89,10 @@
     <string name="tap_to_open_page_to_create_receipt_content_description">Tap to Open Page to Create Receipt</string>
     <string name="add_receipts_cd">Add Receipts</string>
     <string name="local_deletion_alert">Receipts deleted when not logged in, will be available in cloud, if they are backed up previously.</string>
+    <string name="invalid_phone_error">Invalid phone number.</string>
+    <string name="quota_exceeded_message">Quota exceeded.</string>
+    <string name="invalid_code">Invalid code.</string>
+    <string name="verification_field_empty_error">Cannot be empty.</string>
 
 
 </resources>

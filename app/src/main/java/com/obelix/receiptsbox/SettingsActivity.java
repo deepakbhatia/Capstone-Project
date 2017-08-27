@@ -10,7 +10,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 
 /**
@@ -47,7 +46,6 @@ public class SettingsActivity extends PreferenceActivity
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(this);
 
-        Log.d(TAG,preference.getKey());
         // Trigger the listener immediately with the preference's
         // current value.
         onPreferenceChange(preference,

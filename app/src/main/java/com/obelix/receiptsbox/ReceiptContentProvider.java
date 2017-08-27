@@ -401,15 +401,7 @@ public class ReceiptContentProvider extends ContentProvider {
             case RECEIPT_ID: {
 
                 retCursor = getReceiptsByDate(uri, projection, sortOrder);
-                /*retCursor = mOpenHelper.getReadableDatabase().query(
-                        ReceiptItemContract.ReceiptItems.TABLE_NAME,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder
-                );*/
+
                 break;
             }
 

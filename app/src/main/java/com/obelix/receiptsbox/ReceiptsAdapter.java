@@ -326,32 +326,6 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         }
     }
 
-/*    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_receipt_item, parent, false);
-
-        ViewHolder holder = new ViewHolder(view);
-
-        view.setTag(holder);
-
-        return view;
-    }*/
-
-
-/*
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        ViewHolder holder = (ViewHolder) view.getTag();
-
-        holder.mReceiptDateView.setText(getDate(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
-        holder.mReceiptPlaceView.setText(cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_place)));
-
-        holder.mReceiptPriceView.setText(String.valueOf(cursor.getDouble(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_amount))));
-
-        holder.mReceiptTitleView.setText(cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_title)));
-    }*/
-
 
     public static String getDate(long timeStamp){
 
@@ -361,7 +335,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             return sdf.format(netDate);
         }
         catch(Exception ex){
-            return "xx";
+            return ex.getMessage();
         }
     }
 }

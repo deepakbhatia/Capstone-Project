@@ -10,7 +10,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -121,8 +120,6 @@ public class CentralActivity extends AppCompatActivity implements
                  super.onResume();
 
                  SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
-                 Log.d(TAG,sp.getString("currency","$"));
                  navigation.setSelectedItemId(R.id.navigation_receipts);
 
              }
@@ -141,7 +138,6 @@ public class CentralActivity extends AppCompatActivity implements
 
         Constants.uid = sp.getString(AUTHENTICATED_USER,null);
 
-        Log.d(TAG,""+Constants.authenticated);
         return Constants.authenticated;
     }
              @Override

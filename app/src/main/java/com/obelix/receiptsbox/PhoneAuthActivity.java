@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -166,7 +165,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 // 2 - Auto-retrieval. On some devices Google Play services can automatically
                 //     detect the incoming verification SMS and perform verificaiton without
                 //     user action.
-                Log.d(TAG, "onVerificationCompleted:" + credential);
                 // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
                 // [END_EXCLUDE]
@@ -182,7 +180,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             public void onVerificationFailed(FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
-                Log.w(TAG, "onVerificationFailed", e);
                 // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
                 // [END_EXCLUDE]
@@ -190,12 +187,12 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
                     // [START_EXCLUDE]
-                    mPhoneNumberField.setError("Invalid phone number.");
+                    mPhoneNumberField.setError(getResources().getString(R.string.invalid_phone_error));
                     // [END_EXCLUDE]
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
                     // [START_EXCLUDE]
-                    Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
+                    Snackbar.make(findViewById(android.R.id.content), R.string.quota_exceeded_message,
                             Snackbar.LENGTH_SHORT).show();
                     // [END_EXCLUDE]
                 }
@@ -212,7 +209,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 // The SMS verification code has been sent to the provided phone number, we
                 // now need to ask the user to enter the code and then construct a credential
                 // by combining the code with a verification ID.
-                Log.d(TAG, "onCodeSent:" + verificationId);
 
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
@@ -309,7 +305,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
 
 
                             Toast.makeText(currentActivity, getResources().getString(R.string.auth_storage_message),Toast.LENGTH_LONG).show();
@@ -327,11 +322,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             // [END_EXCLUDE]
                         } else {
                             // Sign in failed, display a message and update the UI
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                                 // [START_EXCLUDE silent]
-                                mVerificationField.setError("Invalid code.");
+                                mVerificationField.setError(getResources().getString(R.string.invalid_code));
                                 // [END_EXCLUDE]
                             }
                             // [START_EXCLUDE silent]
@@ -433,14 +427,14 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mVerificationField.setText(null);
 
             mStatusText.setText(R.string.signed_in);
-            mDetailText.setText(getString(R.string.firebase_status_fmt));
+            mDetailText.setText(getResources().getString(R.string.firebase_status_fmt));
         }
     }
 
     private boolean validatePhoneNumber() {
         String phoneNumber = mPhoneNumberField.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)) {
-            mPhoneNumberField.setError("Invalid phone number.");
+            mPhoneNumberField.setError(getResources().getString(R.string.invalid_phone_error));
             return false;
         }
 
@@ -472,7 +466,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             case R.id.button_verify_phone:
                 String code = mVerificationField.getText().toString();
                 if (TextUtils.isEmpty(code)) {
-                    mVerificationField.setError("Cannot be empty.");
+                    mVerificationField.setError(getResources().getString(R.string.verification_field_empty_error));
                     return;
                 }
 
@@ -507,13 +501,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 
-        Log.d(TAG,"onCreateLoader:"+i);
         String sortOrder = ReceiptItemContract.ReceiptItems.COL_date + " DESC";
 
         Uri receiptUri = ReceiptItemContract.ReceiptItems.buildAllReceipts(
                 System.currentTimeMillis());
 
-        Log.d(TAG,"onCreateLoader:"+receiptUri);
 
         return new CursorLoader(this,
                 receiptUri,
@@ -528,8 +520,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             Loader<Cursor> loader,
             Cursor cursor) {
 
-
-        Log.d(TAG,"onLoadFinished:"+cursor.isAfterLast());
 
         new BulkBackUpFirebaseTask(this).execute(cursor);
 
