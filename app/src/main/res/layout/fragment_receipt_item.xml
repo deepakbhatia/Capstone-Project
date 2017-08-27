@@ -58,7 +58,10 @@
             android:layout_below="@+id/location_receipt"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/tag_margin"
+            android:layout_marginStart="@dimen/tag_margin"
             android:layout_marginRight="@dimen/tag_margin"
+            android:layout_marginEnd="@dimen/tag_margin"
+
 
             >
             <TextView

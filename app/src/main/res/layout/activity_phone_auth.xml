@@ -55,8 +55,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingLeft="@dimen/padding_eleme"
+            android:paddingRight="@dimen/padding_eleme"
+            android:paddingStart="@dimen/padding_eleme"
+            android:paddingEnd="@dimen/padding_eleme"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,8 +138,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingLeft="@dimen/padding_eleme"
+            android:paddingRight="@dimen/padding_eleme"
+            android:paddingStart="@dimen/padding_eleme"
+            android:paddingEnd="@dimen/padding_eleme"
             android:visibility="gone"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/tag_margin"
