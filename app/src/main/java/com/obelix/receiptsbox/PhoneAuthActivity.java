@@ -40,7 +40,7 @@ import static android.provider.BaseColumns._ID;
 
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener,
-         LoaderManager.LoaderCallbacks<Cursor>{
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "PhoneAuthActivity";
 
@@ -53,7 +53,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private static final int STATE_SIGNIN_FAILED = 5;
     private static final int STATE_SIGNIN_SUCCESS = 6;
     private static final String AUTHENTICATED = "authenticated";
-    private static final String AUTHENTICATED_USER = "authenticated_user" ;
+    private static final String AUTHENTICATED_USER = "authenticated_user";
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -91,7 +91,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         public void onPhoneChanged(String phone) {
 
 
-
         }
     };
 
@@ -120,7 +119,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
         mVerificationField = (EditText) findViewById(R.id.field_verification_code);
 
-        mPhoneNumberField.addTextChangedListener(new CustomPhoneNumberFormattingTextWatcher(mOnPhoneChangedListener) );
+        mPhoneNumberField.addTextChangedListener(new CustomPhoneNumberFormattingTextWatcher(mOnPhoneChangedListener));
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end,
                                        Spanned dest, int dstart, int dend) {
@@ -135,7 +134,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         };
 
         mPhoneNumberField.setFilters(new InputFilter[]{filter});
-
 
 
         mStartButton = (Button) findViewById(R.id.button_start_verification);
@@ -266,7 +264,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     }
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
-         // [START verify_with_code]
+        // [START verify_with_code]
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
@@ -284,14 +282,14 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 token);             // ForceResendingToken from callbacks
     }
 
-    private void storeAuthentication(boolean authenticated){
+    private void storeAuthentication(boolean authenticated) {
 
-        SharedPreferences sp = getSharedPreferences(AUTHENTICATED,MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(AUTHENTICATED, MODE_PRIVATE);
 
         SharedPreferences.Editor ed = sp.edit();
-        ed.putBoolean(AUTHENTICATED,authenticated);
+        ed.putBoolean(AUTHENTICATED, authenticated);
 
-        ed.putString(AUTHENTICATED_USER,Constants.uid);
+        ed.putString(AUTHENTICATED_USER, Constants.uid);
 
         ed.apply();
     }
@@ -307,7 +305,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             // Sign in success, update UI with the signed-in user's information
 
 
-                            Toast.makeText(currentActivity, getResources().getString(R.string.auth_storage_message),Toast.LENGTH_LONG).show();
+                            Toast.makeText(currentActivity, getResources().getString(R.string.auth_storage_message), Toast.LENGTH_LONG).show();
 
                             getLoaderManager().restartLoader(RECEIPT_LOADER, null, currentActivity);
 
@@ -495,7 +493,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             DbSchema.COL_archived,
             DbSchema.COL_deleted,
             DbSchema.COL_cloud_id};
-
 
 
     @Override

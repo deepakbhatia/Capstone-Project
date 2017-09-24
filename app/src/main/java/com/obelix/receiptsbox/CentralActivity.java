@@ -22,13 +22,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CentralActivity extends AppCompatActivity implements
-        ReceiptItemFragment.OnListFragmentInteractionListener
-         {
+        ReceiptItemFragment.OnListFragmentInteractionListener {
 
 
     private static final String AUTHENTICATED = "authenticated";
-             private static final String AUTHENTICATED_USER = "authenticated_user";
-             private TextView mTextMessage;
+    private static final String AUTHENTICATED_USER = "authenticated_user";
+    private TextView mTextMessage;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     //Content Loading
     private static final int RECEIPT_LOADER = 0;
@@ -49,15 +48,15 @@ public class CentralActivity extends AppCompatActivity implements
 
                 case R.id.navigation_receipts:
                     //mTextMessage.setText(R.string.title_home);
-                    receiptItemFragment = ReceiptItemFragment.newInstance(0,true);
+                    receiptItemFragment = ReceiptItemFragment.newInstance(0, true);
                     fragmentManager.beginTransaction()
 
                             .replace(R.id.content, receiptItemFragment)
                             .commit();
                     break;
                 case R.id.navigation_archived:
-                   // mTextMessage.setText(R.string.title_dashboard);
-                    archivedReceiptItemFragment = ReceiptItemFragment.newInstance(0,false);
+                    // mTextMessage.setText(R.string.title_dashboard);
+                    archivedReceiptItemFragment = ReceiptItemFragment.newInstance(0, false);
                     fragmentManager.beginTransaction()
 
                             .replace(R.id.content, archivedReceiptItemFragment)
@@ -66,9 +65,9 @@ public class CentralActivity extends AppCompatActivity implements
                     break;
                 case R.id.navigation_reports:
                     //mTextMessage.setText(R.string.title_notifications);
-                    receiptItemFragment = ReceiptItemFragment.newInstance(0,false);
+                    receiptItemFragment = ReceiptItemFragment.newInstance(0, false);
 
-                    Intent intent = new Intent(appCompatActivity,PhoneAuthActivity.class);
+                    Intent intent = new Intent(appCompatActivity, PhoneAuthActivity.class);
 
                     appCompatActivity.startActivity(intent);
 
@@ -91,9 +90,9 @@ public class CentralActivity extends AppCompatActivity implements
 
     @BindView(R.id.navigation)
     public BottomNavigationView navigation;
-             private String TAG = "CentralActivity";
+    private String TAG = "CentralActivity";
 
-             @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -104,75 +103,75 @@ public class CentralActivity extends AppCompatActivity implements
 
         appCompatActivity = this;
 
-        if(!readAuthenticated()){
-            Toast.makeText(this, getResources().getString(R.string.unauth_storage_message),Toast.LENGTH_LONG).show();
-        }
-        else {
-            Toast.makeText(this, getResources().getString(R.string.auth_storage_message),Toast.LENGTH_LONG).show();
+        if (!readAuthenticated()) {
+            Toast.makeText(this, getResources().getString(R.string.unauth_storage_message), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.auth_storage_message), Toast.LENGTH_LONG).show();
 
         }
 
         //mTextMessage = (TextView) findViewById(R.id.message);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
-             @Override
-             protected void onResume() {
-                 super.onResume();
 
-                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-                 navigation.setSelectedItemId(R.id.navigation_receipts);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-             }
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        navigation.setSelectedItemId(R.id.navigation_receipts);
 
-             @Override
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
 
     }
 
-    private boolean readAuthenticated(){
-        SharedPreferences sp = getSharedPreferences(AUTHENTICATED,MODE_PRIVATE);
+    private boolean readAuthenticated() {
+        SharedPreferences sp = getSharedPreferences(AUTHENTICATED, MODE_PRIVATE);
 
-        Constants.authenticated = sp.getBoolean(AUTHENTICATED,false);
+        Constants.authenticated = sp.getBoolean(AUTHENTICATED, false);
 
-        Constants.uid = sp.getString(AUTHENTICATED_USER,null);
+        Constants.uid = sp.getString(AUTHENTICATED_USER, null);
 
         return Constants.authenticated;
     }
-             @Override
-             public boolean onCreateOptionsMenu(Menu menu) {
-                 // Inflate the menu; this adds items to the action bar if it is present.
-                 getMenuInflater().inflate(R.menu.menu_main, menu);
-                 return true;
-             }
 
-             @Override
-             public boolean onOptionsItemSelected(MenuItem item) {
-                 // Handle action bar item clicks here. The action bar will
-                 // automatically handle clicks on the Home/Up button, so long
-                 // as you specify a parent activity in AndroidManifest.xml.
-                 int id = item.getItemId();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-                 //noinspection SimplifiableIfStatement
-                 if (id == R.id.action_settings) {
-                     startActivity(new Intent(this, SettingsActivity.class));
-                     return true;
-                 }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-                 return super.onOptionsItemSelected(item);
-             }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
+        switch (requestCode) {
 
-            case CentralActivity.ADD_RECEIPT_CODE:
-            {
+            case CentralActivity.ADD_RECEIPT_CODE: {
 
-                if(resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
 
                     EventBus.getDefault().post(new Receipt());
                 }
@@ -180,13 +179,14 @@ public class CentralActivity extends AppCompatActivity implements
             }
         }
     }
+
     @Override
     public void onListFragmentInteraction(Receipt item) {
 
     }
 
     @OnClick(R.id.add_receipt)
-    public void createReceipt(){
+    public void createReceipt() {
 
         Intent receiptIntent = new Intent(this, AddReceipt.class);
 

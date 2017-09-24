@@ -37,7 +37,7 @@ import butterknife.OnClick;
 public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.ViewHolder> {
 
 
-    private static final String NOT_EXISTS = "NOT_EXISTS" ;
+    private static final String NOT_EXISTS = "NOT_EXISTS";
     private ActionMode.Callback mChoiceMode;
 
     private Context mContext;
@@ -63,7 +63,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
 
-        ViewHolder holder =  viewHolder;
+        ViewHolder holder = viewHolder;
         cursor.moveToPosition(cursor.getPosition());
         holder.setData(cursor);
 
@@ -112,21 +112,21 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
                     //shareCurrentItem();
 
 
-                    EventBus.getDefault().post(new ReceiptActions(true,false,Constants.selectedItems));
+                    EventBus.getDefault().post(new ReceiptActions(true, false, Constants.selectedItems));
 
                     mode.finish(); // Action picked, so close the CAB
 
-                    Toast.makeText(mContext,mContext.getResources().getString(R.string.reload_message), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.reload_message), Toast.LENGTH_LONG).show();
 
                     return true;
                 case R.id.action_delete:
 
-                    EventBus.getDefault().post(new ReceiptActions(false,true,Constants.selectedItems));
+                    EventBus.getDefault().post(new ReceiptActions(false, true, Constants.selectedItems));
 
                     //shareCurrentItem();
                     mode.finish(); // Action picked, so close the CAB
 
-                    Toast.makeText(mContext,mContext.getResources().getString(R.string.reload_message), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.reload_message), Toast.LENGTH_LONG).show();
 
                     return true;
                 default:
@@ -140,14 +140,14 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
 
-            for(int i=0;i<Constants.selectedItemViewsList.size();i++){
+            for (int i = 0; i < Constants.selectedItemViewsList.size(); i++) {
                 View v = Constants.selectedItemViewsList.get(i);
 
                 v.setSelected(false);
 
-                ContentValues receiptVals = (ContentValues)v.getTag();
+                ContentValues receiptVals = (ContentValues) v.getTag();
 
-                setColor(v, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
+                ReceiptDetailActivity.setColor(mContext,v, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
 
             }
 
@@ -160,35 +160,8 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         }
     };
 
-    private void setColor(View v, String tag){
-
-
-
-        switch (tag){
-            case FOOD_CATEGORY_LABEL:
-                v.setBackgroundColor(mContext.getResources().getColor(R.color.colorFood));
-                break;
-            case HEALTH_CATEGORY_LABEL:
-                v.setBackgroundColor(mContext.getResources().getColor(R.color.colorHealth));
-
-                break;
-            case TRANSPORT_CATEGORY_LABEL:
-                v.setBackgroundColor(mContext.getResources().getColor(R.color.colorTransport));
-
-                break;
-            case ENTERTAINMENT_CATEGORY_LABEL:
-                v.setBackgroundColor(mContext.getResources().getColor(R.color.colorEntertainment));
-
-                break;
-            case OTHER_CATEGORY_LABEL:
-                v.setBackgroundColor(mContext.getResources().getColor(R.color.colorOther));
-
-                break;
-        }
-
-    }
     public class ViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener, View.OnLongClickListener{
+            implements View.OnClickListener, View.OnLongClickListener {
         //public final View mView;
 
         @BindView(R.id.card_receipt)
@@ -196,13 +169,13 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         @BindView(R.id.receipt_item_title)
         public TextView mReceiptTitleView;
         @BindView(R.id.price_receipt)
-        public  TextView mReceiptPriceView ;
+        public TextView mReceiptPriceView;
         @BindView(R.id.location_receipt)
-        public  TextView mReceiptPlaceView;
+        public TextView mReceiptPlaceView;
         @BindView(R.id.date_receipt)
-        public  TextView mReceiptDateView;
+        public TextView mReceiptDateView;
         @BindView(R.id.tag_receipt)
-        public  TextView mReceiptTagView;
+        public TextView mReceiptTagView;
 
         public Receipt mItem;
 
@@ -218,7 +191,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
         }
 
-        public void setData(Cursor cursor){
+        public void setData(Cursor cursor) {
 
 
             ContentValues receiptValue = new ContentValues();
@@ -239,7 +212,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             String tag = cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_type));
             mReceiptTagView.setText(tag);
 
-            setColor(mReceiptCard,tag);
+            ReceiptDetailActivity.setColor(mContext,mReceiptCard, tag);
             mReceiptDateView.setText(getDate(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
 
             mReceiptDateView.setTag(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date)));
@@ -247,19 +220,20 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-            mReceiptPriceView.setText(sp.getString(mContext.getString(R.string.currency_key),mContext.getString(R.string.default_currency)).concat(" ")+String.valueOf(cursor.getDouble(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_amount))));
+            mReceiptPriceView.setText(sp.getString(mContext.getString(R.string.currency_key), mContext.getString(R.string.default_currency)).concat(" ") + String.valueOf(cursor.getDouble(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_amount))));
 
             mReceiptTitleView.setText(cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_title)));
 
         }
-        @OnClick({R.id.tag_receipt, R.id.date_receipt})
-        public void searchByClicked(View v){
-            Toast.makeText(mContext,((TextView)v).getText().toString(),Toast.LENGTH_LONG).show();
 
-            if(v.getId() == R.id.date_receipt){
-                EventBus.getDefault().post(new SortBy(String.valueOf(v.getTag()),"date"));
-            }else if(v.getId() == R.id.tag_receipt){
-                EventBus.getDefault().post(new SortBy(((TextView)v).getText().toString(),"type"));
+        @OnClick({R.id.tag_receipt, R.id.date_receipt})
+        public void searchByClicked(View v) {
+            Toast.makeText(mContext, ((TextView) v).getText().toString(), Toast.LENGTH_LONG).show();
+
+            if (v.getId() == R.id.date_receipt) {
+                EventBus.getDefault().post(new SortBy(String.valueOf(v.getTag()), "date"));
+            } else if (v.getId() == R.id.tag_receipt) {
+                EventBus.getDefault().post(new SortBy(((TextView) v).getText().toString(), "type"));
 
             }
         }
@@ -273,22 +247,22 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
         public void onClick(View view) {
 
 
-            ContentValues receiptVals = (ContentValues)view.getTag();
+            ContentValues receiptVals = (ContentValues) view.getTag();
 
-            if(Constants.selectedItems.size()!=0 && !Constants.selectedItems.containsKey(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID))){
+            if (Constants.selectedItems.size() != 0 && !Constants.selectedItems.containsKey(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID))) {
 
-                Constants.selectedItems.put(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID),receiptVals);
-                Constants.selectedItemViews.put(view.getId(),view);
+                Constants.selectedItems.put(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID), receiptVals);
+                Constants.selectedItemViews.put(view.getId(), view);
 
                 Constants.selectedItemViewsList.add(view);
                 view.setBackgroundColor(Color.DKGRAY);
 
-            }else if(Constants.selectedItems.containsKey(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID))){
+            } else if (Constants.selectedItems.containsKey(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID))) {
 
                 Constants.selectedItemViews.remove(view.getId());
 
                 view.setSelected(false);
-                setColor(view, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
+                ReceiptDetailActivity.setColor(mContext,view, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
 
             }
 
@@ -303,14 +277,13 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             if (mActionMode != null) {
                 return false;
             }
-            mActionMode = activity.startSupportActionMode( mActionModeCallback);
+            mActionMode = activity.startSupportActionMode(mActionModeCallback);
 
 
+            ContentValues receiptVals = (ContentValues) view.getTag();
 
-            ContentValues receiptVals = (ContentValues)view.getTag();
-
-            Constants.selectedItems.put(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID),receiptVals);
-            Constants.selectedItemViews.put(view.getId(),view);
+            Constants.selectedItems.put(receiptVals.getAsLong(ReceiptItemContract.ReceiptItems.COL_ID), receiptVals);
+            Constants.selectedItemViews.put(view.getId(), view);
 
             Constants.selectedItemViewsList.add(view);
 
@@ -321,20 +294,18 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             view.setSelected(true);
 
 
-
             return true;
         }
     }
 
 
-    public static String getDate(long timeStamp){
+    public static String getDate(long timeStamp) {
 
-        try{
+        try {
             DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date netDate = (new Date(timeStamp));
             return sdf.format(netDate);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             return ex.getMessage();
         }
     }

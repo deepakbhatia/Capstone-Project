@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">ReceiptBox</string>
-    <string name="title_activity_add" >Add Receipt</string>
+    <string name="title_activity_add">Add Receipt</string>
 
     <!-- Main -->
 
@@ -11,23 +11,23 @@
     <!-- Home -->
 
     <!-- AddReceipt -->
-    <string name="add_edittext_place" >Place and/or Item(s)</string>
-    <string name="add_edittext_amount" >Amount</string>
+    <string name="add_edittext_place">Place and/or Item(s)</string>
+    <string name="add_edittext_amount">Amount</string>
 
     <!-- NewReceipts -->
-    <string name="new_action_archive" >Archive Receipts</string>
-    <string name="new_action_clear" >Clear Receipts</string>
+    <string name="new_action_archive">Archive Receipts</string>
+    <string name="new_action_clear">Clear Receipts</string>
 
     <!-- ArchivedReceipts -->
 
     <string name="title_activity_central" translatable="false">CentralActivity</string>
-    <string name="title_archived" >Archived Receipts</string>
-    <string name="title_receipts" >Receipts</string>
-    <string name="add_card_payment" >Card Payment</string>
-    <string name="receipt_item_title" >Product Item Title</string>
-    <string name="save_receipt" >Save Receipt</string>
+    <string name="title_archived">Archived Receipts</string>
+    <string name="title_receipts">Receipts</string>
+    <string name="add_card_payment">Card Payment</string>
+    <string name="receipt_item_title">Product Item Title</string>
+    <string name="save_receipt">Save Receipt</string>
 
-    <string-array name="receipt_types" >
+    <string-array name="receipt_types">
         <item>Food</item>
         <item>Entertainment</item>
         <item>Transport</item>
@@ -54,17 +54,17 @@
 
     <string name="start_phone_auth">Start</string>
     <string name="verify_phone_auth">Verify</string>
-    <string name="resend_phone_auth" >Resend</string>
+    <string name="resend_phone_auth">Resend</string>
     <string name="hint_phone_number">+48 300 300 300, Phone Number </string>
-    <string name="hint_verification_code" >Verification Code</string>
+    <string name="hint_verification_code">Verification Code</string>
     <string name="status_code_sent">Code Sent</string>
     <string name="status_verification_failed">Verification failed</string>
     <string name="status_verification_succeeded">Verification succeeded</string>
-    <string name="status_sign_in_failed" >Sign-in failed</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
     <string name="instant_validation">(instant validation)</string>
     <string name="firebase_status_fmt"></string>
     <string name="signed_in">Signed In</string>
-    <string name="signed_out" >Signed Out</string>
+    <string name="signed_out">Signed Out</string>
     <string name="phone_title_text"></string>
     <string name="desc_firebase_lockup">App Icon</string>
     <string name="sign_out">Sign Out</string>
@@ -93,6 +93,10 @@
     <string name="quota_exceeded_message">Quota exceeded.</string>
     <string name="invalid_code">Invalid code.</string>
     <string name="verification_field_empty_error">Cannot be empty.</string>
+
+    <string name="title_activity_receipt_detail">ReceiptDetailActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.obelix.receiptsbox">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -18,17 +18,14 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyChhVEY86qTQaPmMkxQ711Oab27-0EmxH0" />
 
-
         <activity
             android:name=".AddReceipt"
             android:label="@string/title_activity_add"
-            android:parentActivityName=".CentralActivity"
-             >
+            android:parentActivityName=".CentralActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CentralActivity" />
-            </activity>
-
+        </activity>
         <activity
             android:name=".CentralActivity"
             android:label="@string/title_activity_central"
@@ -48,9 +45,9 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
-
-        <activity android:name=".PhoneAuthActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".PhoneAuthActivity"
             android:parentActivityName=".CentralActivity"
             android:windowSoftInputMode="adjustPan">
             <meta-data
@@ -58,13 +55,42 @@
                 android:value=".CentralActivity" />
         </activity>
 
-        <receiver android:name=".ReceiptWidgetProvider" >
+        <receiver android:name=".ReceiptWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/receiptbox_widget_provider_info" />
         </receiver>
+
+        <receiver android:name=".ReceiptListWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/receipt_list_widget_provider" />
+        </receiver>
+        <service
+            android:name=".ReceiptWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+
+        <activity
+            android:name=".ReceiptDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_receipt_detail"
+            android:theme="@style/FullscreenTheme"
+            android:parentActivityName=".CentralActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CentralActivity" />
+        </activity>
     </application>
 
 </manifest>

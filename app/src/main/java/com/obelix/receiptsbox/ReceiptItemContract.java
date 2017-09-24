@@ -12,7 +12,6 @@ import android.util.Log;
 public class ReceiptItemContract {
 
 
-
     /**
      * The authority of the lentitems provider.
      */
@@ -23,7 +22,7 @@ public class ReceiptItemContract {
      * lentitems authority.
      */
     public static final Uri CONTENT_URI =
-            Uri.parse("content://" + AUTHORITY+ "/receipts");
+            Uri.parse("content://" + AUTHORITY + "/receipts");
 
     /**
      * Constants for the Items table
@@ -54,15 +53,12 @@ public class ReceiptItemContract {
         public static String COL_cloud_id = "cloud_id";
 
 
-
         /**
          * The content URI for this table.
          */
         //public static final Uri CONTENT_URI =  Uri.withAppendedPath(ReceiptItemContract.CONTENT_URI, "receipts");
         /**
          * The mime type of a directory of items.
-         *
-         *
          */
 
         public static final String CONTENT_TYPE =
@@ -84,6 +80,7 @@ public class ReceiptItemContract {
                 DbSchema.COL_card_payment,
                 DbSchema.COL_archived,
                 DbSchema.COL_deleted};
+
         /**
          * The default sort order for queries containing NAME fields.
          */
@@ -103,6 +100,7 @@ public class ReceiptItemContract {
                     .appendPath("archived")
                     .appendPath(Long.toString(date)).build();
         }
+
         public static Uri buildAllReceipts(long date) {
             return CONTENT_URI.buildUpon()
                     .appendPath("all")
@@ -116,25 +114,10 @@ public class ReceiptItemContract {
                     .appendPath(Long.toString(date))
                     .build();
         }
-
-        public static Uri buildReceiptWithAmountAndDate(double amount, long date) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath(Long.toString(date))
-                    .appendPath(Double.toString(amount))
-                    .build();
-        }
-
-        public static Uri buildReceiptWithAmountAndType(String type, double amount) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath(type)
-                    .appendPath(Double.toString(amount))
-                    .build();
-        }
-
-
+        
         public static String getReceiptTypeFromUri(Uri uri) {
 
-            Log.d("getReceiptTypeFromUri",uri+":"+uri.getPathSegments().get(1));
+            Log.d("getReceiptTypeFromUri", uri + ":" + uri.getPathSegments().get(1));
             return uri.getPathSegments().get(2);
         }
 

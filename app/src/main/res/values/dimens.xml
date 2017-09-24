@@ -13,4 +13,5 @@
     <dimen name="tag_margin">4dp</dimen>
     <dimen name="signedTextSize">32sp</dimen>
     <dimen name="padding_eleme">16dp</dimen>
+    <dimen name="toolbar_text_size">16sp</dimen>
 </resources>

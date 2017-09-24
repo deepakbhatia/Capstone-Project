@@ -16,7 +16,7 @@ public class ReceiptActions {
     ContentValues cv;
     HashMap<Long, ContentValues> selectedItems;
 
-    public ReceiptActions(long id, boolean archive, boolean delete, ContentValues cv){
+    public ReceiptActions(long id, boolean archive, boolean delete, ContentValues cv) {
         this.id = id;
 
         this.archive = archive;
@@ -27,7 +27,7 @@ public class ReceiptActions {
     }
 
 
-    public ReceiptActions(boolean archive, boolean delete,  HashMap<Long, ContentValues> selectedItems){
+    public ReceiptActions(boolean archive, boolean delete, HashMap<Long, ContentValues> selectedItems) {
 
         this.archive = archive;
 

@@ -3,6 +3,7 @@ package com.obelix.receiptsbox;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -46,7 +47,7 @@ import static com.obelix.receiptsbox.Constants.receiptsEndpoint;
  */
 public class ReceiptItemFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        QueryFirebaseTask.QueryCompleteInterface{
+        QueryFirebaseTask.QueryCompleteInterface {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_NEW_RECEIPTS = "add_receipts";
@@ -91,7 +92,6 @@ public class ReceiptItemFragment extends Fragment implements
     }
 
 
-
     @SuppressWarnings("unused")
     public static ReceiptItemFragment newInstance(int columnCount, boolean showNew) {
         ReceiptItemFragment fragment = new ReceiptItemFragment();
@@ -123,13 +123,12 @@ public class ReceiptItemFragment extends Fragment implements
 
 
         contentResolver = getActivity().getContentResolver();
-        if(!EventBus.getDefault().isRegistered(this))
+        if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
-        if(getArguments().getBoolean(ARG_NEW_RECEIPTS))
+        if (getArguments().getBoolean(ARG_NEW_RECEIPTS))
             getLoaderManager().initLoader(RECEIPT_LOADER, null, this);
-        else
-        {
+        else {
             getLoaderManager().initLoader(ARCHIVED_RECEIPT_LOADER, null, this);
         }
 
@@ -145,28 +144,26 @@ public class ReceiptItemFragment extends Fragment implements
     public static String RECEIPT_FIREBASE_SORT = "priority";
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(SortBy sortBy){
+    public void onMessageEvent(SortBy sortBy) {
 //        Toast.makeText(getActivity(), sortBy.type+":"+sortBy.type, Toast.LENGTH_SHORT).show();
 
-        if(sortBy.type.contains(RECEIPT_SORT_DATE))
-        {
-            if(Constants.authenticated){
-                new QueryFirebaseTask(this).execute(RECEIPT_FIREBASE_SORT,String.valueOf((Long.parseLong(sortBy.value))));
-            }else{
+        if (sortBy.type.contains(RECEIPT_SORT_DATE)) {
+            if (Constants.authenticated) {
+                new QueryFirebaseTask(this).execute(RECEIPT_FIREBASE_SORT, String.valueOf((Long.parseLong(sortBy.value))));
+            } else {
                 Bundle bundle = new Bundle();
 
-                bundle.putLong(RECEIPT_SORT_DATE,Long.parseLong(sortBy.value));
+                bundle.putLong(RECEIPT_SORT_DATE, Long.parseLong(sortBy.value));
                 getLoaderManager().restartLoader(SORT_DATE_RECEIPT_LOADER, bundle, this);
 
             }
 
 
-        }else  if(sortBy.type.contains(RECEIPT_SORT_TYPE))
-        {
-            if(Constants.authenticated){
-                new QueryFirebaseTask(this).execute(RECEIPT_SORT_TYPE,sortBy.value);
+        } else if (sortBy.type.contains(RECEIPT_SORT_TYPE)) {
+            if (Constants.authenticated) {
+                new QueryFirebaseTask(this).execute(RECEIPT_SORT_TYPE, sortBy.value);
 
-            }else{
+            } else {
 
                 Bundle bundle = new Bundle();
 
@@ -181,10 +178,11 @@ public class ReceiptItemFragment extends Fragment implements
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Receipt receipt){
+    public void onEvent(Receipt receipt) {
         Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.receipt_created_message), Toast.LENGTH_SHORT).show();
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -192,7 +190,7 @@ public class ReceiptItemFragment extends Fragment implements
 
         ButterKnife.bind(this, view);
 
-        mReceiptAdapter = new ReceiptsAdapter((AppCompatActivity) getActivity(),getActivity(), null, 0);
+        mReceiptAdapter = new ReceiptsAdapter((AppCompatActivity) getActivity(), getActivity(), null, 0);
 
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -205,7 +203,7 @@ public class ReceiptItemFragment extends Fragment implements
     }
 
 
-        @Override
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
@@ -230,18 +228,17 @@ public class ReceiptItemFragment extends Fragment implements
         Uri receiptUri = ReceiptItemContract.ReceiptItems.buildReceiptWithDate(
                 System.currentTimeMillis());
 
-        if(i == ARCHIVED_RECEIPT_LOADER){
+        if (i == ARCHIVED_RECEIPT_LOADER) {
 
             receiptUri = ReceiptItemContract.ReceiptItems.buildArchivedReceiptWithDate(
                     System.currentTimeMillis());
-        }
-        else if(i == SORT_DATE_RECEIPT_LOADER){
+        } else if (i == SORT_DATE_RECEIPT_LOADER) {
 
             receiptUri = ReceiptItemContract.ReceiptItems.buildReceiptWithDate(
                     bundle.getLong(RECEIPT_SORT_DATE));
-        }else  if(i == SORT_TYPE_RECEIPT_LOADER) {
+        } else if (i == SORT_TYPE_RECEIPT_LOADER) {
 
-            Toast.makeText(getActivity(),""+bundle.getString(RECEIPT_SORT_TYPE),Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "" + bundle.getString(RECEIPT_SORT_TYPE), Toast.LENGTH_LONG).show();
 
             receiptUri = ReceiptItemContract.ReceiptItems.buildReceiptWithTypeAndDate(
                     bundle.getString(RECEIPT_SORT_TYPE), System.currentTimeMillis());
@@ -268,10 +265,10 @@ public class ReceiptItemFragment extends Fragment implements
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(ReceiptActions receiptActions){
+    public void onMessageEvent(ReceiptActions receiptActions) {
 
         mDatabase = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl(Constants.baseUrl+receiptsEndpoint);
+                .getReferenceFromUrl(Constants.baseUrl + receiptsEndpoint);
 
         HashMap<Long, ContentValues> receiptItems = receiptActions.selectedItems;
 
@@ -279,22 +276,21 @@ public class ReceiptItemFragment extends Fragment implements
 
         Iterator receiptIdIt = receiptIds.iterator();
 
-        while(receiptIdIt.hasNext()){
-            Long receiptId = (Long)receiptIdIt.next();
+        while (receiptIdIt.hasNext()) {
+            Long receiptId = (Long) receiptIdIt.next();
 
             ContentValues receiptValues = receiptItems.get(receiptId);
 
             String cloud_id = receiptValues.getAsString(ReceiptItemContract.ReceiptItems.COL_cloud_id);
 
             //ContentResolver cr = getActivity().getContentResolver();
-            if(receiptActions.archive && contentResolver!=null)
-            {
+            if (receiptActions.archive && contentResolver != null) {
 
-                if(Constants.authenticated){
+                if (Constants.authenticated) {
 
 
-                    if(!cloud_id.equals(NOT_EXISTS)){
-                        Map<String,Object> receiptMap = new HashMap<String,Object>();
+                    if (!cloud_id.equals(NOT_EXISTS)) {
+                        Map<String, Object> receiptMap = new HashMap<String, Object>();
                         receiptMap.put(ReceiptItemContract.ReceiptItems.COL_archived, 1);
 
                         mDatabase.child(Constants.uid).child(cloud_id).updateChildren(receiptMap);
@@ -304,20 +300,19 @@ public class ReceiptItemFragment extends Fragment implements
 
                 {
 
-                    receiptValues.put(ReceiptItemContract.ReceiptItems.COL_archived,1);
+                    receiptValues.put(ReceiptItemContract.ReceiptItems.COL_archived, 1);
 
-                    contentResolver.update(ReceiptItemContract.ReceiptItems.buildReceipt(receiptId),receiptValues, ReceiptItemContract.ReceiptItems.TABLE_NAME+
-                            "." + ReceiptItemContract.ReceiptItems.COL_ID + " = ?",new String[]{String.valueOf(receiptId)});
+                    contentResolver.update(ReceiptItemContract.ReceiptItems.buildReceipt(receiptId), receiptValues, ReceiptItemContract.ReceiptItems.TABLE_NAME +
+                            "." + ReceiptItemContract.ReceiptItems.COL_ID + " = ?", new String[]{String.valueOf(receiptId)});
 
                 }
-            }
-            else if(receiptActions.delete){
+            } else if (receiptActions.delete) {
 
-                if(Constants.authenticated){
+                if (Constants.authenticated) {
                     mDatabase.child(Constants.uid).child(cloud_id).removeValue();
 
-                }else{
-                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.local_deletion_alert),Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.local_deletion_alert), Toast.LENGTH_LONG).show();
 
                 }
                 {
@@ -327,14 +322,19 @@ public class ReceiptItemFragment extends Fragment implements
             }
         }
 
-        if(isAdded())
-        getLoaderManager().restartLoader(RECEIPT_LOADER, null, this);
+        Intent dataUpdatedIntent = new Intent(Constants.RECEIPTS_UPDATED)
+                .setPackage(getActivity().getPackageName());
+        getActivity().sendBroadcast(dataUpdatedIntent);
+
+
+        if (isAdded())
+            getLoaderManager().restartLoader(RECEIPT_LOADER, null, this);
     }
 
     @Override
     public void queryCompleted(MatrixCursor matrixCursor) {
-        if(matrixCursor!=null)
-        mReceiptAdapter.swapCursor(matrixCursor);
+        if (matrixCursor != null)
+            mReceiptAdapter.swapCursor(matrixCursor);
     }
 
     public interface OnListFragmentInteractionListener {

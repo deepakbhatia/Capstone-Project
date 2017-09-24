@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -68,11 +69,12 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
     public static String FIREBASE_DATE_SORT_KEY = "priority";
 
     @OnClick(R.id.add_datepicker_date)
-    public void showDateDialog(){
-            datePickerDialog.show();
+    public void showDateDialog() {
+        datePickerDialog.show();
     }
+
     @OnClick(R.id.save_receipt)
-    public void saveReceipt(){
+    public void saveReceipt() {
         long date = Long.parseLong(String.valueOf(receiptDate.getTag()));
         String amount_string = edittextAmount.getText().toString();
 
@@ -83,26 +85,27 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         String type = String.valueOf(receipt_category.getSelectedItem());
 
         int receipt_id = getLocalReceiptId();
-        if(type!=null && String.valueOf(date)!=null && (!title.equals(""))  && receipt_address!=null && ( !amount_string.equals(""))){
+        if (type != null && String.valueOf(date) != null && (!title.equals("")) && receipt_address != null && (!amount_string.equals(""))) {
             double amount = Double.parseDouble(amount_string);
 
-            Receipt receipt = new Receipt(receipt_id,type,title,date,receipt_address,amount,card_payment.isChecked()?1:0);
+            Receipt receipt = new Receipt(receipt_id, type, title, date, receipt_address, amount, card_payment.isChecked() ? 1 : 0);
 
             storeContentValues(receipt);
 
             storeLocalReceiptId(receipt_id++);
-        }else{
-            Toast.makeText(this, R.string.error_form_filled_message,Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.error_form_filled_message, Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private int getLocalReceiptId(){
+    private int getLocalReceiptId() {
         SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
-        return sharedpreferences.getInt(receipt_id,0);
+        return sharedpreferences.getInt(receipt_id, 0);
     }
-    private void storeLocalReceiptId(int count){
+
+    private void storeLocalReceiptId(int count) {
 
         SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -112,7 +115,8 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
         editor.apply();
     }
-    private void storeContentValues(Receipt receipt){
+
+    private void storeContentValues(Receipt receipt) {
 
 
         ContentValues receiptValue = new ContentValues();
@@ -123,7 +127,6 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_amount, receipt.amount);
 
 
-
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_archived, receipt.archived);
 
 
@@ -131,7 +134,6 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_date, Long.valueOf(receipt.date));
-
 
 
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_deleted, receipt.deleted);
@@ -146,7 +148,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
         receiptValue.put(ReceiptItemContract.ReceiptItems.COL_type, receipt.type);
 
 
-        if(Constants.authenticated){
+        if (Constants.authenticated) {
 
             Map<String, Object> receiptMap = new HashMap<>();
 
@@ -159,7 +161,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
             receiptMap.put(ReceiptItemContract.ReceiptItems.COL_place, receipt.place);
             receiptMap.put(ReceiptItemContract.ReceiptItems.COL_title, receipt.title);
             receiptMap.put(ReceiptItemContract.ReceiptItems.COL_type, receipt.type);
-            receiptMap.put(FIREBASE_DATE_SORT_KEY,Long.valueOf(receipt.date));
+            receiptMap.put(FIREBASE_DATE_SORT_KEY, Long.valueOf(receipt.date));
 
             String key = mDatabase.push().getKey();
 
@@ -168,7 +170,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
             receiptValue.put(ReceiptItemContract.ReceiptItems.COL_cloud_id, key);
 
             Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put( key, receiptMap);
+            childUpdates.put(key, receiptMap);
             //childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
             //mDatabase.setValue(receiptValue);
 
@@ -177,15 +179,16 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
         getContentResolver().insert(ReceiptItemContract.CONTENT_URI, receiptValue);
 
-
-
-
+        Intent dataUpdatedIntent = new Intent(Constants.RECEIPTS_UPDATED)
+                .setPackage(this.getPackageName());
+        this.sendBroadcast(dataUpdatedIntent);
         this.setResult(Activity.RESULT_OK);
 
         finish();
 
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,23 +216,23 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
             @Override
             public void onPlaceSelected(Place place) {
 
-                receipt_address  = place.getAddress().toString();
+                receipt_address = place.getAddress().toString();
             }
 
             @Override
             public void onError(Status status) {
 
-                Toast.makeText(currentActivity,status.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(currentActivity, status.toString(), Toast.LENGTH_LONG).show();
                 //Log.i(TAG, "An error occurred: " + status);
             }
         });
 
         Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog  = new DatePickerDialog(
-                this, this,newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog = new DatePickerDialog(
+                this, this, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         String[] myResArray = getResources().getStringArray(R.array.receipt_types);
         List<String> myResArrayList = Arrays.asList(myResArray);
-        ArrayAdapter receipt_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,myResArrayList);
+        ArrayAdapter receipt_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, myResArrayList);
 
         receipt_category.setAdapter(receipt_adapter);
 
@@ -240,7 +243,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
-        String date_val = day+"/"+(month+1)+"/"+year;
+        String date_val = day + "/" + (month + 1) + "/" + year;
         receiptDate.setText(date_val);
 
 

@@ -19,4 +19,6 @@
     <color name="colorPrimaryText">@android:color/white</color>
 
     <color name="colorViewFocus">#BCAAA4</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

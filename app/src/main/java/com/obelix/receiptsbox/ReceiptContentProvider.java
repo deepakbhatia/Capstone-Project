@@ -19,8 +19,6 @@ public class ReceiptContentProvider extends ContentProvider {
     }
 
 
-
-
     private static SQLiteQueryBuilder sReceiptQueryBuilder = null;
 
     static {
@@ -29,6 +27,7 @@ public class ReceiptContentProvider extends ContentProvider {
         sReceiptQueryBuilder.setTables(ReceiptItemContract.ReceiptItems.TABLE_NAME);
 
     }
+
     /**
      * The content URI for this table.
      */
@@ -61,7 +60,7 @@ public class ReceiptContentProvider extends ContentProvider {
 
     private static final int RECEIPTS_ARCHIVED = 1009;
 
-    private static final int RECEIPTS_TYPE_ALL_DATE = 1010 ;
+    private static final int RECEIPTS_TYPE_ALL_DATE = 1010;
 
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, RECEIPTS);
@@ -74,68 +73,66 @@ public class ReceiptContentProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/amount/*/#", RECEIPTS_AMOUNT_TYPE);
 
 
-
-
     }
 
     //type = ?
     private static final String sTypeSelection =
-           ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_type + " = ? ";
 
     //type = ?
     private static final String sAmountSelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_amount + " >= ? ";
 
     private static final String sDaySelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_archived + " = ? AND " +
                     ReceiptItemContract.ReceiptItems.COL_date + " <= ? ";
 
     private static final String sAllSelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
-                    "."  +
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
+                    "." +
                     ReceiptItemContract.ReceiptItems.COL_date + " <= ? ";
 
     //type = ? AND date >= ?
     private static final String sTypeWithStartDateSelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_type + " = ? AND " +
                     ReceiptItemContract.ReceiptItems.COL_date + " <= ? ";
     //type = ? AND date >= ?
     private static final String sArchivedWithStartDateSelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_archived + " = ? AND " +
                     ReceiptItemContract.ReceiptItems.COL_date + " <= ? ";
 
     //type = ? AND date = ?
     private static final String sTypeAndDaySelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_type + " = ? AND " +
                     ReceiptItemContract.ReceiptItems.COL_date + " = ? ";
 
     //amount = ? AND date = ?
     private static final String sAmountAndDaySelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_amount + " >= ? AND " +
                     ReceiptItemContract.ReceiptItems.COL_date + " = ? ";
 
     //type = ? AND amount = ?
     private static final String sAmountAndTypeSelection =
-            ReceiptItemContract.ReceiptItems.TABLE_NAME+
+            ReceiptItemContract.ReceiptItems.TABLE_NAME +
                     "." + ReceiptItemContract.ReceiptItems.COL_amount + " >= ? AND " +
                     ReceiptItemContract.ReceiptItems.COL_type + " = ? ";
 
 
     private Cursor getReceiptsByDate(Uri uri, String[] projection, String sortOrder) {
-        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri,2);
+        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri, 2);
 
         String[] selectionArgs;
         String selection;
 
         {
-            selectionArgs = new String[]{String.valueOf(0),Long.toString(startDate)};
+            selectionArgs = new String[]{String.valueOf(0), Long.toString(startDate)};
             selection = sDaySelection;
         }
 
@@ -150,7 +147,7 @@ public class ReceiptContentProvider extends ContentProvider {
     }
 
     private Cursor getReceiptsAll(Uri uri, String[] projection, String sortOrder) {
-        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri,2);
+        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri, 2);
 
         String[] selectionArgs;
         String selection;
@@ -171,13 +168,13 @@ public class ReceiptContentProvider extends ContentProvider {
     }
 
     private Cursor getArchivedReceiptsByDate(Uri uri, String[] projection, String sortOrder) {
-        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri,2);
+        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri, 2);
 
         String[] selectionArgs;
         String selection;
 
         {
-            selectionArgs = new String[]{String.valueOf(1),Long.toString(startDate)};
+            selectionArgs = new String[]{String.valueOf(1), Long.toString(startDate)};
             selection = sArchivedWithStartDateSelection;
         }
 
@@ -193,7 +190,7 @@ public class ReceiptContentProvider extends ContentProvider {
 
     private Cursor getReceiptsByTypeAndDate(Uri uri, String[] projection, String sortOrder) {
         String type = ReceiptItemContract.ReceiptItems.getReceiptTypeFromUri(uri);
-        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri,3);
+        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri, 3);
 
         String[] selectionArgs;
         String selection;
@@ -224,8 +221,8 @@ public class ReceiptContentProvider extends ContentProvider {
         String[] selectionArgs;
         String selection;
 
-       {
-           selectionArgs = new String[]{Double.toString(amount), type};
+        {
+            selectionArgs = new String[]{Double.toString(amount), type};
             selection = sAmountAndTypeSelection;
         }
 
@@ -242,7 +239,7 @@ public class ReceiptContentProvider extends ContentProvider {
 
     private Cursor getReceiptsByAmountAndDate(Uri uri, String[] projection, String sortOrder) {
         double amount = ReceiptItemContract.ReceiptItems.getAmountFromUri(uri);
-        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri,1);
+        long startDate = ReceiptItemContract.ReceiptItems.getDateFromUri(uri, 1);
 
         String[] selectionArgs;
         String selection;
@@ -273,10 +270,10 @@ public class ReceiptContentProvider extends ContentProvider {
         final int match = sURIMatcher.match(uri);
         int rowsDeleted;
 
-        Log.d("RECEIPT_ID",""+uri);
+        Log.d("RECEIPT_ID", "" + uri);
 
         // this makes delete all rows return the number of rows deleted
-        if ( null == selection ) selection = "1";
+        if (null == selection) selection = "1";
         switch (match) {
 
             case RECEIPT_ID:
@@ -327,7 +324,7 @@ public class ReceiptContentProvider extends ContentProvider {
         switch (match) {
             case RECEIPTS: {
                 long _id = db.insert(ReceiptItemContract.ReceiptItems.TABLE_NAME, null, values);
-                if ( _id > 0 )
+                if (_id > 0)
                     returnUri = ReceiptItemContract.ReceiptItems.buildReceipt(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -356,14 +353,13 @@ public class ReceiptContentProvider extends ContentProvider {
         Cursor retCursor;
         switch (sURIMatcher.match(uri)) {
 
-            case RECEIPTS_ARCHIVED:{
+            case RECEIPTS_ARCHIVED: {
 
                 retCursor = getArchivedReceiptsByDate(uri, projection, sortOrder);
                 break;
             }
             // "weather/*/*"
-            case RECEIPTS_AMOUNT_DATE:
-            {
+            case RECEIPTS_AMOUNT_DATE: {
                 retCursor = getReceiptsByAmountAndDate(uri, projection, sortOrder);
                 break;
             }
@@ -393,7 +389,7 @@ public class ReceiptContentProvider extends ContentProvider {
                 retCursor = getReceiptsByDate(uri, projection, sortOrder);
                 break;
             }
-            case RECEIPTS_TYPE_ALL_DATE:{
+            case RECEIPTS_TYPE_ALL_DATE: {
                 retCursor = getReceiptsAll(uri, projection, sortOrder);
                 break;
             }
@@ -433,7 +429,7 @@ public class ReceiptContentProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
-        Log.d("update",""+rowsUpdated);
+        Log.d("update", "" + rowsUpdated);
         return rowsUpdated;
     }
 }

@@ -24,6 +24,7 @@ public class Constants {
 
     public static String baseUrl = "https://receiptsbox-e7d6f.firebaseio.com/";
     public static String receiptsEndpoint = "receipts";
+    public static String RECEIPTS_UPDATED = "com.obelix.receiptsbox.RECEIPTS_UPDATED";
 
     public static String uid;
 }

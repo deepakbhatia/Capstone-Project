@@ -21,8 +21,8 @@ public class ReceiptWidgetProvider extends AppWidgetProvider {
         final String action = intent.getAction();
 
         if (action.equals(CLICK_ACTION)) {
-                   Intent widgetIntentClick = new Intent(context, AddReceipt.class);
-            widgetIntentClick.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent widgetIntentClick = new Intent(context, AddReceipt.class);
+            widgetIntentClick.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(widgetIntentClick);
         }
@@ -33,7 +33,7 @@ public class ReceiptWidgetProvider extends AppWidgetProvider {
         final int N = appWidgetIds.length;
 
         // Perform this loop procedure for each App Widget that belongs to this provider
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             int appWidgetId = appWidgetIds[i];
 
             Intent intent = new Intent(context, AddReceipt.class);
@@ -43,7 +43,7 @@ public class ReceiptWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.add_receipt_widget);
 
 
-            views.setOnClickPendingIntent(R.id.add_receipt_widget_action,pendingIntent);
+            views.setOnClickPendingIntent(R.id.add_receipt_widget_action, pendingIntent);
 
 
             appWidgetManager.updateAppWidget(appWidgetId, views);

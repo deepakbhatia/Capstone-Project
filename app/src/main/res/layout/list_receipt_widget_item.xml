@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/receipt_widget_item"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@android:color/white"
+    android:paddingEnd="@dimen/padding_eleme"
+    android:paddingRight="@dimen/padding_eleme"
+    android:paddingStart="@dimen/padding_eleme"
+    android:paddingLeft="@dimen/padding_eleme"
+    >
+
+    <TextView
+        android:id="@+id/receiptTitle"
+        style="@style/ThemeOverlay.MyTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/colorAccent"
+        tools:text="GOOG" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/receiptPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/tag_margin"
+            android:layout_marginRight="@dimen/tag_margin"
+            android:textColor="@color/colorAccent"
+
+            tools:text="1000.00" />
+
+        <TextView
+            android:id="@+id/receiptDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_eleme"
+            android:paddingStart="@dimen/padding_eleme"
+            android:paddingEnd="@dimen/padding_eleme"
+            android:paddingRight="@dimen/padding_eleme"
+            android:textColor="@color/colorAccent"
+
+            tools:text="100%" />
+    </LinearLayout>
+
+</LinearLayout>

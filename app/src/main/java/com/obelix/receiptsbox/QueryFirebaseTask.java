@@ -52,7 +52,7 @@ public class QueryFirebaseTask extends AsyncTask<String, Void, Void> {
 
 
         if(sortBy.equals(RECEIPT_SORT_TYPE)){
-            qRef = mRef.child(Constants.uid).orderByChild(sortBy).equalTo(sortByValue); ;
+            qRef = mRef.child(Constants.uid).orderByChild(sortBy).equalTo(sortByValue);
         }else{
             qRef = mRef.child(Constants.uid).orderByChild(sortBy).endAt(Long.parseLong(sortByValue));
         }

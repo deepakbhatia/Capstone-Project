@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.obelix.receiptsbox.ReceiptDetailActivity"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/receipt_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+    </android.support.v7.widget.Toolbar>
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/fragment_receipt_item"
+        android:layout_centerInParent="true"
+
+        android:layout_margin="@dimen/activity_horizontal_margin"></include>
+
+</RelativeLayout>
