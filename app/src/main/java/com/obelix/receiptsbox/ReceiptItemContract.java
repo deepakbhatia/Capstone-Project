@@ -3,7 +3,6 @@ package com.obelix.receiptsbox;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 /**
  * Created by obelix on 16/06/2017.
@@ -117,7 +116,6 @@ public class ReceiptItemContract {
 
         public static String getReceiptTypeFromUri(Uri uri) {
 
-            Log.d("getReceiptTypeFromUri", uri + ":" + uri.getPathSegments().get(1));
             return uri.getPathSegments().get(2);
         }
 
