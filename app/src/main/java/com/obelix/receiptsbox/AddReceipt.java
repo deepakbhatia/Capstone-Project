@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -179,9 +178,7 @@ public class AddReceipt extends AppCompatActivity implements DatePickerDialog.On
 
         getContentResolver().insert(ReceiptItemContract.CONTENT_URI, receiptValue);
 
-        Intent dataUpdatedIntent = new Intent(Constants.RECEIPTS_UPDATED)
-                .setPackage(this.getPackageName());
-        this.sendBroadcast(dataUpdatedIntent);
+
         this.setResult(Activity.RESULT_OK);
 
         finish();

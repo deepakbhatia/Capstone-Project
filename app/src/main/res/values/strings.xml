@@ -72,9 +72,6 @@
     <string name="unauth_storage_message">Receipts will be stored on Device</string>
     <string name="auth_storage_message">Receipts will be stored Servers too.</string>
     <string name="receipt_created_message">New Receipt Added</string>
-    <string name="choose_receipt_date_tapping_will_open_a_date_picker_dialog_content_description">Choose Receipt Date. Tapping will open a date picker dialog</string>
-    <string name="enter_place_of_receipt_content_description">Enter Place of Receipt</string>
-    <string name="enter_receipt_amount_cd">Enter Receipt Amount</string>
     <string name="tap_to_select_or_unselect_card_payment_cd">Tap to Select or Unselect Card Payment</string>
     <string name="tap_to_open_spinner_to_choose_receipt_category_cd">Tap to Open Spinner to Choose Receipt Category</string>
     <string name="tap_button_to_save_receipt_cd">Tap button to save receipt</string>
@@ -93,10 +90,7 @@
     <string name="quota_exceeded_message">Quota exceeded.</string>
     <string name="invalid_code">Invalid code.</string>
     <string name="verification_field_empty_error">Cannot be empty.</string>
-
-    <string name="title_activity_receipt_detail">ReceiptDetailActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_receipt_detail">Receipt Detail</string>
 
 
 </resources>

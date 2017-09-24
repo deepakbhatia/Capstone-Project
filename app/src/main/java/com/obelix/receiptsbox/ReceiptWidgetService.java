@@ -74,6 +74,7 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), itemId);
 
+
         if (mCursor.moveToPosition(position)) {
 
             receiptTitle = mCursor.getString(mCursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_title));
