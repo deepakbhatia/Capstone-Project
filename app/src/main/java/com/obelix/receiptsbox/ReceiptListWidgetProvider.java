@@ -32,14 +32,14 @@ public class ReceiptListWidgetProvider extends AppWidgetProvider {
         if (action.equals(CLICK_ACTION)) {
             Intent widgetIntentClick = new Intent(context, ReceiptDetailActivity.class);
 
-            widgetIntentClick.putExtra(DbSchema.COL_amount,intent.getStringExtra(DbSchema.COL_amount));
-            widgetIntentClick.putExtra(DbSchema.COL_title,intent.getStringExtra(DbSchema.COL_title));
+            widgetIntentClick.putExtra(DbSchema.COL_amount, intent.getStringExtra(DbSchema.COL_amount));
+            widgetIntentClick.putExtra(DbSchema.COL_title, intent.getStringExtra(DbSchema.COL_title));
 
             widgetIntentClick.putExtra(DbSchema.COL_date, intent.getStringExtra(DbSchema.COL_date));
 
-            widgetIntentClick.putExtra(DbSchema.COL_amount,intent.getStringExtra(DbSchema.COL_amount));
-            widgetIntentClick.putExtra(DbSchema.COL_type,intent.getStringExtra(DbSchema.COL_type));
-            widgetIntentClick.putExtra(DbSchema.COL_place,intent.getStringExtra(DbSchema.COL_place));
+            widgetIntentClick.putExtra(DbSchema.COL_amount, intent.getStringExtra(DbSchema.COL_amount));
+            widgetIntentClick.putExtra(DbSchema.COL_type, intent.getStringExtra(DbSchema.COL_type));
+            widgetIntentClick.putExtra(DbSchema.COL_place, intent.getStringExtra(DbSchema.COL_place));
 
             widgetIntentClick.setFlags(FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(widgetIntentClick);

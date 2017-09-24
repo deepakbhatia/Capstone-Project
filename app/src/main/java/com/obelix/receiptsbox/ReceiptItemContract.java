@@ -114,7 +114,7 @@ public class ReceiptItemContract {
                     .appendPath(Long.toString(date))
                     .build();
         }
-        
+
         public static String getReceiptTypeFromUri(Uri uri) {
 
             Log.d("getReceiptTypeFromUri", uri + ":" + uri.getPathSegments().get(1));

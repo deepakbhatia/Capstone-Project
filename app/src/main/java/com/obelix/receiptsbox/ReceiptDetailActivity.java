@@ -73,7 +73,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         mReceiptPlaceView.setText(receiptIntent.getStringExtra(DbSchema.COL_place));
 
 
-        setColor(this, mReceiptCard,tag);
+        setColor(this, mReceiptCard, tag);
     }
 
     public static void setColor(Context m, View v, String tag) {
@@ -112,9 +112,6 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         // created, to briefly hint to the user that UI controls
         // are available.
     }
-
-
-
 
 
 }

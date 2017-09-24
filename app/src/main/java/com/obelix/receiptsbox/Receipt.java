@@ -1,6 +1,6 @@
 package com.obelix.receiptsbox;
 
-public class Receipt  {
+public class Receipt {
 
     public String cloud_id;
 
@@ -16,7 +16,8 @@ public class Receipt  {
     public int deleted;
 
     public long priority;
-    public Receipt(){
+
+    public Receipt() {
 
     }
 

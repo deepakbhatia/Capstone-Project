@@ -9,7 +9,7 @@ public class SortBy {
     public String value;
     public String type;
 
-    public  SortBy(String value, String type){
+    public SortBy(String value, String type) {
         this.value = value;
 
         this.type = type;

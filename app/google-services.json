@@ -49,6 +49,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "771907043206-roqikhb438vb65cen8aegud25cfvpkft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.obelix.receiptsbox",
+            "certificate_hash": "6a59cceba8ba8c27d9127f918e91844044d690e9"
+          }
+        },
+        {
           "client_id": "771907043206-sq4fv9ec73h31sps19s5qtoorffrhh2b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

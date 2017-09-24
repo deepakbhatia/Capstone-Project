@@ -26,6 +26,7 @@ public class ReceiptWidgetService extends RemoteViewsService {
         return new ReceiptRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
+
 /**
  * This is the factory that will provide data to the collection widget.
  */
@@ -34,23 +35,28 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
     private Cursor mCursor;
 
     private final int mAppWidgetId;
+
     public ReceiptRemoteViewsFactory(Context context, Intent intent) {
         mContext = context;
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
     }
+
     public void onCreate() {
         // Since we reload the cursor in onDataSetChanged() which gets called immediately after
         // onCreate(), we do nothing here.
     }
+
     public void onDestroy() {
         if (mCursor != null) {
             mCursor.close();
         }
     }
+
     public int getCount() {
         return mCursor.getCount();
     }
+
     public RemoteViews getViewAt(int position) {
         // Get the data for this position from the content provider
 
@@ -61,7 +67,6 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         String receiptType;
 
         String receiptPlace;
-
 
 
         String stockHistory = "empty";
@@ -80,7 +85,6 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             receiptPlace = mCursor.getString(mCursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_place));
 
 
-
             // Set Stock Value for layout item with the Price, Symbol & Stock Change
             rv.setTextViewText(R.id.receiptTitle, String.valueOf(receiptTitle));
 
@@ -95,14 +99,14 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
             // Set the click intent so that we can handle it and show a toast message
             final Intent fillInIntent = new Intent();
             final Bundle extras = new Bundle();
-            extras.putString(DbSchema.COL_amount,receiptPrice);
-            extras.putString(DbSchema.COL_title,receiptTitle);
+            extras.putString(DbSchema.COL_amount, receiptPrice);
+            extras.putString(DbSchema.COL_title, receiptTitle);
 
-            extras.putString(DbSchema.COL_date,receiptDate);
+            extras.putString(DbSchema.COL_date, receiptDate);
 
-            extras.putString(DbSchema.COL_amount,receiptPrice);
-            extras.putString(DbSchema.COL_type,receiptType);
-            extras.putString(DbSchema.COL_place,receiptPlace);
+            extras.putString(DbSchema.COL_amount, receiptPrice);
+            extras.putString(DbSchema.COL_type, receiptType);
+            extras.putString(DbSchema.COL_place, receiptPlace);
 
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.receipt_widget_item, fillInIntent);
@@ -110,20 +114,25 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 
         return rv;
     }
+
     public RemoteViews getLoadingView() {
         // We aren't going to return a default loading view in this sample
         return null;
     }
+
     public int getViewTypeCount() {
         // Technically, we have two types of views (the dark and light background views)
         return 2;
     }
+
     public long getItemId(int position) {
         return position;
     }
+
     public boolean hasStableIds() {
         return true;
     }
+
     public void onDataSetChanged() {
         // Refresh the cursor
         if (mCursor != null) {
@@ -134,7 +143,7 @@ class ReceiptRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
         Uri receiptUri = ReceiptItemContract.ReceiptItems.buildReceiptWithDate(
                 System.currentTimeMillis());
 
-        mCursor = mContext.getContentResolver().query(receiptUri,  PROJECTION_ALL, null,
+        mCursor = mContext.getContentResolver().query(receiptUri, PROJECTION_ALL, null,
                 null, sortOrder);
 
     }

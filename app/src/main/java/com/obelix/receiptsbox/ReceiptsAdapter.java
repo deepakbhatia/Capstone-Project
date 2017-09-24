@@ -147,7 +147,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
 
                 ContentValues receiptVals = (ContentValues) v.getTag();
 
-                ReceiptDetailActivity.setColor(mContext,v, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
+                ReceiptDetailActivity.setColor(mContext, v, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
 
             }
 
@@ -212,7 +212,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
             String tag = cursor.getString(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_type));
             mReceiptTagView.setText(tag);
 
-            ReceiptDetailActivity.setColor(mContext,mReceiptCard, tag);
+            ReceiptDetailActivity.setColor(mContext, mReceiptCard, tag);
             mReceiptDateView.setText(getDate(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date))));
 
             mReceiptDateView.setTag(cursor.getLong(cursor.getColumnIndex(ReceiptItemContract.ReceiptItems.COL_date)));
@@ -262,7 +262,7 @@ public class ReceiptsAdapter extends CursorRecyclerViewAdapter<ReceiptsAdapter.V
                 Constants.selectedItemViews.remove(view.getId());
 
                 view.setSelected(false);
-                ReceiptDetailActivity.setColor(mContext,view, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
+                ReceiptDetailActivity.setColor(mContext, view, receiptVals.getAsString(ReceiptItemContract.ReceiptItems.COL_type));
 
             }
 
