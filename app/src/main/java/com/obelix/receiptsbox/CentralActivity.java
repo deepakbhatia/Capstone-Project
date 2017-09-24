@@ -175,9 +175,7 @@ public class CentralActivity extends AppCompatActivity implements
 
                     EventBus.getDefault().post(new Receipt());
 
-                    Intent dataUpdatedIntent = new Intent(Constants.RECEIPTS_UPDATED)
-                            .setPackage(this.getPackageName());
-                    this.sendBroadcast(dataUpdatedIntent);
+
                 }
 
             }

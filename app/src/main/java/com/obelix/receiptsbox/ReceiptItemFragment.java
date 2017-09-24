@@ -181,6 +181,10 @@ public class ReceiptItemFragment extends Fragment implements
     public void onEvent(Receipt receipt) {
         Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.receipt_created_message), Toast.LENGTH_SHORT).show();
 
+        Intent dataUpdatedIntent = new Intent(Constants.RECEIPTS_UPDATED)
+                .setPackage(getActivity().getPackageName());
+        getActivity().sendBroadcast(dataUpdatedIntent);
+
     }
 
     @Override

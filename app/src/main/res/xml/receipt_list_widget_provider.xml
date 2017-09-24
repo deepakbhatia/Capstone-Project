@@ -2,7 +2,7 @@
     android:minWidth="@dimen/min_list_width"
     android:minHeight="@dimen/min_list_height"
     android:initialLayout="@layout/list_receipt_widget_layout"
-    android:updatePeriodMillis="20000"
+    android:updatePeriodMillis="200000"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
     android:previewImage="@drawable/ic_widget_list_preview">
